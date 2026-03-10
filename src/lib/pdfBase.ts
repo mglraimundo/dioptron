@@ -78,7 +78,6 @@ export function buildSignatureBlock(provider: ProviderConfig, dateStr: string): 
   const stack: Content[] = [
     { text: provider.providerName || '', bold: true, fontSize: 12, alignment: 'center' },
     { text: ' ', fontSize: 100 },
-    { text: dateStr, fontSize: 10, alignment: 'center', margin: [0, 0, 0, 16] as [number, number, number, number] },
     {
       text: provider.licenseNumber
         ? `Médico Oftalmologista (OM nº ${provider.licenseNumber})`
@@ -99,9 +98,11 @@ export function buildSignatureBlock(provider: ProviderConfig, dateStr: string): 
       text: `*M${provider.licenseNumber}*`,
       fontSize: 8,
       alignment: 'center',
-      margin: [0, 2, 0, 0] as [number, number, number, number],
+      margin: [0, 2, 0, 16] as [number, number, number, number],
     });
   }
+
+  stack.push({ text: dateStr, fontSize: 10, alignment: 'center', margin: [0, 0, 0, 0] as [number, number, number, number] });
 
   return {
     stack,
