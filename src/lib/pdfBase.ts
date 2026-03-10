@@ -95,6 +95,12 @@ export function buildSignatureBlock(provider: ProviderConfig, dateStr: string): 
       width: 120,
       alignment: 'center',
     } as Content);
+    stack.push({
+      text: `*M${provider.licenseNumber}*`,
+      fontSize: 8,
+      alignment: 'center',
+      margin: [0, 2, 0, 0] as [number, number, number, number],
+    });
   }
 
   return {
