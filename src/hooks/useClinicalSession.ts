@@ -52,7 +52,7 @@ function defaultSession(): ClinicalSession {
   };
 }
 
-type Eye = 'od' | 'oe';
+export type Eye = 'od' | 'oe';
 type RefractionField = keyof RefractionData;
 
 export function useClinicalSession() {
@@ -93,7 +93,7 @@ export function useClinicalSession() {
 
   const handleAddBlur = useCallback(() => {
     setSession(prev => {
-      if (prev.od.addPP !== prev.oe.addPP) {
+      if (prev.od.addPP !== prev.oe.addPP && prev.addSyncActive) {
         return { ...prev, addSyncActive: false };
       }
       return prev;
@@ -102,9 +102,7 @@ export function useClinicalSession() {
 
   const setClRefraction = useCallback((eye: Eye, field: RefractionField, value: string) => {
     setSession(prev => {
-      const odKey = 'clOd' as const;
-      const oeKey = 'clOe' as const;
-      const target = eye === 'od' ? odKey : oeKey;
+      const target = eye === 'od' ? 'clOd' : 'clOe';
       const next = { ...prev, [target]: { ...prev[target], [field]: value } };
 
       if (field === 'addPP') {
@@ -121,7 +119,7 @@ export function useClinicalSession() {
 
   const handleClAddBlur = useCallback(() => {
     setSession(prev => {
-      if (prev.clOd.addPP !== prev.clOe.addPP) {
+      if (prev.clOd.addPP !== prev.clOe.addPP && prev.clAddSyncActive) {
         return { ...prev, clAddSyncActive: false };
       }
       return prev;
@@ -130,7 +128,7 @@ export function useClinicalSession() {
 
   const handleLensTypeBlur = useCallback(() => {
     setSession(prev => {
-      if (prev.lensTypeOD !== prev.lensTypeOE) {
+      if (prev.lensTypeOD !== prev.lensTypeOE && prev.lensTypeSyncActive) {
         return { ...prev, lensTypeSyncActive: false };
       }
       return prev;

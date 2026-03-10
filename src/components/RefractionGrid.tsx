@@ -1,28 +1,25 @@
 import type { RefractionData } from '../hooks/useClinicalSession';
+import type { Eye } from '../hooks/useClinicalSession';
+import type { ColumnDef } from './refractionColumns';
 import { DiopterInput } from './DiopterInput';
 import { AxisInput } from './AxisInput';
+import { DecimalInput } from './DecimalInput';
 
-type Eye = 'od' | 'oe';
 type Field = keyof RefractionData;
 
 interface Props {
   od: RefractionData;
   oe: RefractionData;
+  columns: ColumnDef[];
   onChange: (eye: Eye, field: Field, value: string) => void;
   onAddBlur: () => void;
 }
 
-const COLUMNS: { label: string; field: Field; type: 'diopter' | 'axis' | 'text' }[] = [
-  { label: 'Esfera', field: 'esfera', type: 'diopter' },
-  { label: 'Cilindro', field: 'cilindro', type: 'diopter' },
-  { label: 'Eixo', field: 'eixo', type: 'axis' },
-  { label: 'Add', field: 'addPP', type: 'diopter' },
-];
-
-function EyeRow({ eye, label, data, onChange, onAddBlur }: {
+function EyeRow({ eye, label, data, columns, onChange, onAddBlur }: {
   eye: Eye;
   label: string;
   data: RefractionData;
+  columns: ColumnDef[];
   onChange: (eye: Eye, field: Field, value: string) => void;
   onAddBlur: () => void;
 }) {
@@ -31,7 +28,7 @@ function EyeRow({ eye, label, data, onChange, onAddBlur }: {
       <td className="px-3 py-2 text-sm font-semibold text-slate-600 whitespace-nowrap">
         {label}
       </td>
-      {COLUMNS.map(col => (
+      {columns.map(col => (
         <td key={col.field} className="px-1.5 py-1.5">
           {col.type === 'diopter' ? (
             <DiopterInput
@@ -46,11 +43,9 @@ function EyeRow({ eye, label, data, onChange, onAddBlur }: {
               onChange={v => onChange(eye, col.field, v)}
             />
           ) : (
-            <input
-              type="text"
+            <DecimalInput
               value={data[col.field]}
-              onChange={e => onChange(eye, col.field, e.target.value)}
-              className="w-full border border-slate-300 rounded-md px-2 py-1.5 text-sm text-center text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              onChange={v => onChange(eye, col.field, v)}
             />
           )}
         </td>
@@ -59,14 +54,14 @@ function EyeRow({ eye, label, data, onChange, onAddBlur }: {
   );
 }
 
-export function RefractionGrid({ od, oe, onChange, onAddBlur }: Props) {
+export function RefractionGrid({ od, oe, columns, onChange, onAddBlur }: Props) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full border-collapse">
         <thead>
           <tr>
             <th className="w-16" />
-            {COLUMNS.map(col => (
+            {columns.map(col => (
               <th
                 key={col.field}
                 className="px-1.5 py-2 text-xs font-medium text-slate-500 uppercase tracking-wide text-center"
@@ -77,8 +72,8 @@ export function RefractionGrid({ od, oe, onChange, onAddBlur }: Props) {
           </tr>
         </thead>
         <tbody>
-          <EyeRow eye="od" label="OD" data={od} onChange={onChange} onAddBlur={onAddBlur} />
-          <EyeRow eye="oe" label="OE" data={oe} onChange={onChange} onAddBlur={onAddBlur} />
+          <EyeRow eye="od" label="OD" data={od} columns={columns} onChange={onChange} onAddBlur={onAddBlur} />
+          <EyeRow eye="oe" label="OE" data={oe} columns={columns} onChange={onChange} onAddBlur={onAddBlur} />
         </tbody>
       </table>
     </div>

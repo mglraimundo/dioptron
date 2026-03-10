@@ -2,11 +2,13 @@ import { useState, useEffect, useRef } from 'react';
 import type { ClinicalSession, RefractionData } from '../hooks/useClinicalSession';
 import type { ProviderConfig } from '../hooks/useProviderConfig';
 import { RefractionGrid } from './RefractionGrid';
+import { GLASSES_COLUMNS } from './refractionColumns';
 import LensTypeInput from './LensTypeInput';
 import { isDiopterValid, isoToDDMMYYYY, ddmmyyyyToISO, capitalize } from '../lib/formatters';
 import { inputClass } from '../lib/styles';
+import { SectionDivider } from './SectionDivider';
+import type { Eye } from '../hooks/useClinicalSession';
 
-type Eye = 'od' | 'oe';
 type RefractionField = keyof ClinicalSession['od'];
 
 interface Props {
@@ -21,19 +23,7 @@ interface Props {
 
 const ALL_REFRACTION_FIELDS = ['esfera', 'cilindro', 'eixo', 'addPP'] as const;
 const DIOPTER_FIELDS = ['esfera', 'cilindro', 'addPP'] as const;
-const EYES = ['od', 'oe'] as const;
-
-function SectionDivider({ label }: { label: string }) {
-  return (
-    <div className="flex items-center gap-3 mb-4">
-      <div className="flex-1 border-t border-slate-200" />
-      <span className="text-xs text-slate-400 font-medium uppercase tracking-wide">
-        {label}
-      </span>
-      <div className="flex-1 border-t border-slate-200" />
-    </div>
-  );
-}
+const EYES: Eye[] = ['od', 'oe'];
 
 export function PrescriptionForm({ session, provider, onProviderUpdate, setField, setRefraction, handleAddBlur }: Props) {
   const [loading, setLoading] = useState<'pdf' | 'print' | null>(null);
@@ -140,7 +130,7 @@ export function PrescriptionForm({ session, provider, onProviderUpdate, setField
                 autoComplete="off"
                 value={session.healthSystemNumber}
                 onChange={e => setField('healthSystemNumber', e.target.value)}
-className={`${inputClass} w-full`}
+                className={`${inputClass} w-full`}
               />
             </div>
           </div>
@@ -152,6 +142,7 @@ className={`${inputClass} w-full`}
           <RefractionGrid
             od={session.od}
             oe={session.oe}
+            columns={GLASSES_COLUMNS}
             onChange={setRefraction}
             onAddBlur={handleAddBlur}
           />
@@ -260,8 +251,7 @@ className={`${inputClass} w-full`}
 
         {/* Action buttons */}
         <div className="border-t border-slate-100 pt-4">
-          <div className="flex gap-3 justify-end">
-            <div className="flex gap-2">
+          <div className="flex gap-2 justify-end">
               <button
                 onClick={handleGeneratePdf}
                 disabled={!canGenerate || loading !== null}
@@ -309,7 +299,6 @@ className={`${inputClass} w-full`}
                 </svg>
                 <span className="hidden sm:inline">{loading === 'print' ? 'A imprimir...' : 'Imprimir'}</span>
               </button>
-            </div>
           </div>
           {pdfError && (
             <p role="alert" className="text-xs text-red-600 text-right mt-2">
