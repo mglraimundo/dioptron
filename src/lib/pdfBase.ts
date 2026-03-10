@@ -7,7 +7,7 @@ import type { ClinicalSession } from '../hooks/useClinicalSession';
 import type { ProviderConfig } from '../hooks/useProviderConfig';
 import type { RefractionData } from '../hooks/useClinicalSession';
 import { INSTITUTION_LOGO, FOOTER_TEXT } from './constants';
-import { isoToDDMMYYYY, sanitizeFilename } from './formatters';
+import { sanitizeFilename } from './formatters';
 
 let fontsInitialized = false;
 export function ensureFonts() {
