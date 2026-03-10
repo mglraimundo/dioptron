@@ -2,12 +2,12 @@ import { useState, useCallback } from 'react';
 import { todayISO } from '../lib/formatters';
 
 export interface RefractionData {
-  esfera: string;
-  cilindro: string;
-  eixo: string;
+  sphere: string;
+  cylinder: string;
+  axis: string;
   addPP: string;
-  curvaBase: string;
-  diametro: string;
+  baseCurve: string;
+  diameter: string;
 }
 
 export interface ClinicalSession {
@@ -15,21 +15,23 @@ export interface ClinicalSession {
   patientName: string;
   healthSystemNumber: string;
   od: RefractionData;
-  oe: RefractionData;
+  os: RefractionData;
   addSyncActive: boolean;
   lensType: string;
-  observacoes: string;
+  notes: string;
   clOd: RefractionData;
-  clOe: RefractionData;
+  clOs: RefractionData;
   clAddSyncActive: boolean;
+  clBaseCurveSyncActive: boolean;
+  clDiameterSyncActive: boolean;
   lensTypeSyncActive: boolean;
   lensTypeOD: string;
-  lensTypeOE: string;
-  clObservacoes: string;
+  lensTypeOS: string;
+  clNotes: string;
 }
 
 function defaultRefraction(): RefractionData {
-  return { esfera: '', cilindro: '', eixo: '', addPP: '', curvaBase: '', diametro: '' };
+  return { sphere: '', cylinder: '', axis: '', addPP: '', baseCurve: '', diameter: '' };
 }
 
 function defaultSession(): ClinicalSession {
@@ -38,21 +40,23 @@ function defaultSession(): ClinicalSession {
     patientName: '',
     healthSystemNumber: '',
     od: defaultRefraction(),
-    oe: defaultRefraction(),
+    os: defaultRefraction(),
     addSyncActive: true,
     lensType: '',
-    observacoes: '',
+    notes: '',
     clOd: defaultRefraction(),
-    clOe: defaultRefraction(),
+    clOs: defaultRefraction(),
     clAddSyncActive: true,
+    clBaseCurveSyncActive: true,
+    clDiameterSyncActive: true,
     lensTypeSyncActive: true,
     lensTypeOD: '',
-    lensTypeOE: '',
-    clObservacoes: '',
+    lensTypeOS: '',
+    clNotes: '',
   };
 }
 
-export type Eye = 'od' | 'oe';
+export type Eye = 'od' | 'os';
 type RefractionField = keyof RefractionData;
 
 export function useClinicalSession() {
@@ -62,10 +66,10 @@ export function useClinicalSession() {
     setSession(prev => {
       const next = { ...prev, [field]: value };
 
-      // Lens type sync: OD→OE on every keystroke; disable when user types in OE
+      // Lens type sync: OD→OS on every keystroke; disable when user types in OS
       if (field === 'lensTypeOD' && prev.lensTypeSyncActive) {
-        next.lensTypeOE = value as string;
-      } else if (field === 'lensTypeOE') {
+        next.lensTypeOS = value as string;
+      } else if (field === 'lensTypeOS') {
         next.lensTypeSyncActive = false;
       }
 
@@ -78,11 +82,11 @@ export function useClinicalSession() {
       const next = { ...prev };
       next[eye] = { ...prev[eye], [field]: value };
 
-      // Add sync: OD→OE on every keystroke; disable when user types in OE
+      // Add sync: OD→OS on every keystroke; disable when user types in OS
       if (field === 'addPP') {
         if (eye === 'od' && prev.addSyncActive) {
-          next.oe = { ...prev.oe, addPP: value };
-        } else if (eye === 'oe') {
+          next.os = { ...prev.os, addPP: value };
+        } else if (eye === 'os') {
           next.addSyncActive = false;
         }
       }
@@ -93,7 +97,7 @@ export function useClinicalSession() {
 
   const handleAddBlur = useCallback(() => {
     setSession(prev => {
-      if (prev.od.addPP !== prev.oe.addPP && prev.addSyncActive) {
+      if (prev.od.addPP !== prev.os.addPP && prev.addSyncActive) {
         return { ...prev, addSyncActive: false };
       }
       return prev;
@@ -102,14 +106,30 @@ export function useClinicalSession() {
 
   const setClRefraction = useCallback((eye: Eye, field: RefractionField, value: string) => {
     setSession(prev => {
-      const target = eye === 'od' ? 'clOd' : 'clOe';
+      const target = eye === 'od' ? 'clOd' : 'clOs';
       const next = { ...prev, [target]: { ...prev[target], [field]: value } };
 
       if (field === 'addPP') {
         if (eye === 'od' && prev.clAddSyncActive) {
-          next.clOe = { ...prev.clOe, addPP: value };
-        } else if (eye === 'oe') {
+          next.clOs = { ...prev.clOs, addPP: value };
+        } else if (eye === 'os') {
           next.clAddSyncActive = false;
+        }
+      }
+
+      if (field === 'baseCurve') {
+        if (eye === 'od' && prev.clBaseCurveSyncActive) {
+          next.clOs = { ...next.clOs, baseCurve: value };
+        } else if (eye === 'os') {
+          next.clBaseCurveSyncActive = false;
+        }
+      }
+
+      if (field === 'diameter') {
+        if (eye === 'od' && prev.clDiameterSyncActive) {
+          next.clOs = { ...next.clOs, diameter: value };
+        } else if (eye === 'os') {
+          next.clDiameterSyncActive = false;
         }
       }
 
@@ -119,8 +139,26 @@ export function useClinicalSession() {
 
   const handleClAddBlur = useCallback(() => {
     setSession(prev => {
-      if (prev.clOd.addPP !== prev.clOe.addPP && prev.clAddSyncActive) {
+      if (prev.clOd.addPP !== prev.clOs.addPP && prev.clAddSyncActive) {
         return { ...prev, clAddSyncActive: false };
+      }
+      return prev;
+    });
+  }, []);
+
+  const handleClBaseCurveBlur = useCallback(() => {
+    setSession(prev => {
+      if (prev.clOd.baseCurve !== prev.clOs.baseCurve && prev.clBaseCurveSyncActive) {
+        return { ...prev, clBaseCurveSyncActive: false };
+      }
+      return prev;
+    });
+  }, []);
+
+  const handleClDiameterBlur = useCallback(() => {
+    setSession(prev => {
+      if (prev.clOd.diameter !== prev.clOs.diameter && prev.clDiameterSyncActive) {
+        return { ...prev, clDiameterSyncActive: false };
       }
       return prev;
     });
@@ -128,7 +166,7 @@ export function useClinicalSession() {
 
   const handleLensTypeBlur = useCallback(() => {
     setSession(prev => {
-      if (prev.lensTypeOD !== prev.lensTypeOE && prev.lensTypeSyncActive) {
+      if (prev.lensTypeOD !== prev.lensTypeOS && prev.lensTypeSyncActive) {
         return { ...prev, lensTypeSyncActive: false };
       }
       return prev;
@@ -139,5 +177,5 @@ export function useClinicalSession() {
     setSession(defaultSession);
   }, []);
 
-  return { session, setField, setRefraction, handleAddBlur, setClRefraction, handleClAddBlur, handleLensTypeBlur, clearSession };
+  return { session, setField, setRefraction, handleAddBlur, setClRefraction, handleClAddBlur, handleClBaseCurveBlur, handleClDiameterBlur, handleLensTypeBlur, clearSession };
 }

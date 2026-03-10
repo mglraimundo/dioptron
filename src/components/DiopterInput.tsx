@@ -24,7 +24,7 @@ export function DiopterInput({ value, onChange, onBlur, id, positive }: Props) {
     <input
       id={id}
       type="text"
-      inputMode="decimal"
+      inputMode="text"
       autoComplete="off"
       value={value}
       onChange={e => { setError(false); onChange(e.target.value); }}

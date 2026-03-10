@@ -9,19 +9,19 @@ type Field = keyof RefractionData;
 
 interface Props {
   od: RefractionData;
-  oe: RefractionData;
+  os: RefractionData;
   columns: ColumnDef[];
   onChange: (eye: Eye, field: Field, value: string) => void;
-  onAddBlur: () => void;
+  onFieldBlur?: Partial<Record<Field, () => void>>;
 }
 
-function EyeRow({ eye, label, data, columns, onChange, onAddBlur }: {
+function EyeRow({ eye, label, data, columns, onChange, onFieldBlur }: {
   eye: Eye;
   label: string;
   data: RefractionData;
   columns: ColumnDef[];
   onChange: (eye: Eye, field: Field, value: string) => void;
-  onAddBlur: () => void;
+  onFieldBlur?: Partial<Record<Field, () => void>>;
 }) {
   return (
     <tr>
@@ -34,7 +34,7 @@ function EyeRow({ eye, label, data, columns, onChange, onAddBlur }: {
             <DiopterInput
               value={data[col.field]}
               onChange={v => onChange(eye, col.field, v)}
-              onBlur={col.field === 'addPP' ? onAddBlur : undefined}
+              onBlur={onFieldBlur?.[col.field]}
               positive={col.field === 'addPP'}
             />
           ) : col.type === 'axis' ? (
@@ -46,6 +46,7 @@ function EyeRow({ eye, label, data, columns, onChange, onAddBlur }: {
             <DecimalInput
               value={data[col.field]}
               onChange={v => onChange(eye, col.field, v)}
+              onBlur={onFieldBlur?.[col.field]}
             />
           )}
         </td>
@@ -54,7 +55,7 @@ function EyeRow({ eye, label, data, columns, onChange, onAddBlur }: {
   );
 }
 
-export function RefractionGrid({ od, oe, columns, onChange, onAddBlur }: Props) {
+export function RefractionGrid({ od, os, columns, onChange, onFieldBlur }: Props) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full border-collapse">
@@ -72,8 +73,8 @@ export function RefractionGrid({ od, oe, columns, onChange, onAddBlur }: Props) 
           </tr>
         </thead>
         <tbody>
-          <EyeRow eye="od" label="OD" data={od} columns={columns} onChange={onChange} onAddBlur={onAddBlur} />
-          <EyeRow eye="oe" label="OE" data={oe} columns={columns} onChange={onChange} onAddBlur={onAddBlur} />
+          <EyeRow eye="od" label="OD" data={od} columns={columns} onChange={onChange} onFieldBlur={onFieldBlur} />
+          <EyeRow eye="os" label="OE" data={os} columns={columns} onChange={onChange} onFieldBlur={onFieldBlur} />
         </tbody>
       </table>
     </div>

@@ -4,10 +4,11 @@ import { formatDecimal2, isDecimal2Valid, filterDecimalInput } from '../lib/form
 interface Props {
   value: string;
   onChange: (value: string) => void;
+  onBlur?: () => void;
   id?: string;
 }
 
-export function DecimalInput({ value, onChange, id }: Props) {
+export function DecimalInput({ value, onChange, onBlur, id }: Props) {
   const [error, setError] = useState(false);
 
   function handleChange(raw: string) {
@@ -20,6 +21,7 @@ export function DecimalInput({ value, onChange, id }: Props) {
     const formatted = formatDecimal2(value);
     onChange(formatted);
     setError(!isDecimal2Valid(formatted));
+    onBlur?.();
   }
 
   return (

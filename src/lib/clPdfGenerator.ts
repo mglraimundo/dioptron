@@ -20,15 +20,15 @@ function makeUnifiedTable(od: RefractionData, oe: RefractionData): Content {
   ];
 
   const makeRow = (label: string, data: RefractionData): TableCell[] => {
-    const hasCyl = !!parseFloat(data.cilindro);
+    const hasCyl = !!parseFloat(data.cylinder);
     return [
       { text: label, bold: true, fontSize: 13, alignment: 'center' },
-      { text: data.esfera || '—', alignment: 'center', fontSize: 13 },
-      { text: hasCyl ? data.cilindro : '—', alignment: 'center', fontSize: 13 },
-      { text: hasCyl ? (data.eixo || '0') + '°' : '—', alignment: 'center', fontSize: 13 },
+      { text: data.sphere || '—', alignment: 'center', fontSize: 13 },
+      { text: hasCyl ? data.cylinder : '—', alignment: 'center', fontSize: 13 },
+      { text: hasCyl ? (data.axis || '0') + '°' : '—', alignment: 'center', fontSize: 13 },
       { text: addValue(data), alignment: 'center', fontSize: 13 },
-      { text: data.curvaBase || '—', alignment: 'center', fontSize: 13 },
-      { text: data.diametro || '—', alignment: 'center', fontSize: 13 },
+      { text: data.baseCurve || '—', alignment: 'center', fontSize: 13 },
+      { text: data.diameter || '—', alignment: 'center', fontSize: 13 },
     ];
   };
 
@@ -58,19 +58,19 @@ function buildDocContent(session: ClinicalSession, provider: ProviderConfig, dat
   if (session.lensTypeOD) {
     notesContent.push({ text: `OD: ${session.lensTypeOD}`, fontSize: 12, margin: [0, 20, 0, 0] as [number, number, number, number] });
   }
-  if (session.lensTypeOE) {
-    notesContent.push({ text: `OE: ${session.lensTypeOE}`, fontSize: 12, margin: [0, session.lensTypeOD ? 4 : 20, 0, 0] as [number, number, number, number] });
+  if (session.lensTypeOS) {
+    notesContent.push({ text: `OE: ${session.lensTypeOS}`, fontSize: 12, margin: [0, session.lensTypeOD ? 4 : 20, 0, 0] as [number, number, number, number] });
   }
 
-  if (session.clObservacoes) {
+  if (session.clNotes) {
     notesContent.push({ text: 'Observações', bold: true, fontSize: 11, margin: [0, 18, 0, 4] as [number, number, number, number] });
-    notesContent.push({ text: capitalize(session.clObservacoes), fontSize: 12 });
+    notesContent.push({ text: capitalize(session.clNotes), fontSize: 12 });
   }
 
   return [
     buildHeaderBlock('PRESCRIÇÃO DE LENTES DE CONTACTO'),
     buildPatientBlock(session),
-    makeUnifiedTable(session.clOd, session.clOe),
+    makeUnifiedTable(session.clOd, session.clOs),
     ...notesContent,
     buildSignatureBlock(provider, dateStr),
   ];

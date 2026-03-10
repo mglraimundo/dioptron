@@ -22,9 +22,9 @@ interface Props {
 }
 
 
-const ALL_REFRACTION_FIELDS = ['esfera', 'cilindro', 'eixo', 'addPP'] as const;
-const DIOPTER_FIELDS = ['esfera', 'cilindro', 'addPP'] as const;
-const EYES: Eye[] = ['od', 'oe'];
+const ALL_REFRACTION_FIELDS = ['sphere', 'cylinder', 'axis', 'addPP'] as const;
+const DIOPTER_FIELDS = ['sphere', 'cylinder', 'addPP'] as const;
+const EYES: Eye[] = ['od', 'os'];
 
 export function PrescriptionForm({ session, provider, onProviderUpdate, setField, setRefraction, handleAddBlur }: Props) {
   const [loading, setLoading] = useState<'pdf' | 'print' | null>(null);
@@ -68,20 +68,20 @@ export function PrescriptionForm({ session, provider, onProviderUpdate, setField
     function formatEye(label: string, data: RefractionData): string {
       const add = parseFloat(data.addPP) || 0;
       const addPart = add !== 0 ? `, add ${data.addPP}` : '';
-      const cyl = parseFloat(data.cilindro) || 0;
-      const cylPart = cyl !== 0 ? ` (${data.cilindro} x ${data.eixo}º)` : '';
-      return `${label} ${data.esfera}${cylPart}${addPart}`;
+      const cyl = parseFloat(data.cylinder) || 0;
+      const cylPart = cyl !== 0 ? ` (${data.cylinder} x ${data.axis}º)` : '';
+      return `${label} ${data.sphere}${cylPart}${addPart}`;
     }
 
     function isEyeEmpty(data: RefractionData): boolean {
-      return !data.esfera && !data.cilindro && !data.eixo && !data.addPP;
+      return !data.sphere && !data.cylinder && !data.axis && !data.addPP;
     }
 
     const lines = ['', 'R/'];
     if (!isEyeEmpty(session.od)) lines.push(formatEye('OD', session.od));
-    if (!isEyeEmpty(session.oe)) lines.push(formatEye('OE', session.oe));
+    if (!isEyeEmpty(session.os)) lines.push(formatEye('OE', session.os));
     if (session.lensType.trim()) lines.push(capitalize(session.lensType.trim()));
-    if (session.observacoes.trim()) lines.push(capitalize(session.observacoes.trim()));
+    if (session.notes.trim()) lines.push(capitalize(session.notes.trim()));
 
     await navigator.clipboard.writeText(lines.join('\n'));
     setCopied(true);
@@ -140,10 +140,10 @@ export function PrescriptionForm({ session, provider, onProviderUpdate, setField
           <SectionDivider label="Prescrição" />
           <RefractionGrid
             od={session.od}
-            oe={session.oe}
+            os={session.os}
             columns={GLASSES_COLUMNS}
             onChange={setRefraction}
-            onAddBlur={handleAddBlur}
+            onFieldBlur={{ addPP: handleAddBlur }}
           />
           <div className="mt-7">
             <LensTypeInput
@@ -160,8 +160,8 @@ export function PrescriptionForm({ session, provider, onProviderUpdate, setField
             <textarea
               id="observacoes"
               autoComplete="off"
-              value={session.observacoes}
-              onChange={e => setField('observacoes', e.target.value)}
+              value={session.notes}
+              onChange={e => setField('notes', e.target.value)}
               rows={3}
               className={`${inputClass} w-full resize-none overflow-y-auto`}
             />

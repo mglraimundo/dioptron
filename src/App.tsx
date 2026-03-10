@@ -6,12 +6,12 @@ import { ContactLensPrescriptionForm } from './components/ContactLensPrescriptio
 import { useProviderConfig } from './hooks/useProviderConfig';
 import { useClinicalSession } from './hooks/useClinicalSession';
 
-type Tab = 'oculos' | 'lentes-contacto';
+type Tab = 'glasses' | 'contact-lenses';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<Tab>('oculos');
+  const [activeTab, setActiveTab] = useState<Tab>('glasses');
   const { config, updateField } = useProviderConfig();
-  const { session, setField, setRefraction, handleAddBlur, setClRefraction, handleClAddBlur, handleLensTypeBlur, clearSession } = useClinicalSession();
+  const { session, setField, setRefraction, handleAddBlur, setClRefraction, handleClAddBlur, handleClBaseCurveBlur, handleClDiameterBlur, handleLensTypeBlur, clearSession } = useClinicalSession();
 
   const tabBtn = (tab: Tab, label: string) => (
     <button
@@ -34,8 +34,8 @@ export default function App() {
           {/* Card header with tab switcher */}
           <div className="bg-emerald-50 border-b border-emerald-100 px-6 py-3 flex items-center justify-between">
             <nav className="flex gap-1 bg-white rounded-lg p-1 border border-emerald-200">
-              {tabBtn('oculos', 'Óculos')}
-              {tabBtn('lentes-contacto', 'Lentes Contacto')}
+              {tabBtn('glasses', 'Óculos')}
+              {tabBtn('contact-lenses', 'Lentes Contacto')}
             </nav>
             <button
               onClick={clearSession}
@@ -46,7 +46,7 @@ export default function App() {
           </div>
 
           {/* Card content */}
-          {activeTab === 'oculos' ? (
+          {activeTab === 'glasses' ? (
             <PrescriptionForm
               session={session}
               provider={config}
@@ -63,6 +63,8 @@ export default function App() {
               setField={setField}
               setRefraction={setClRefraction}
               handleAddBlur={handleClAddBlur}
+              handleBaseCurveBlur={handleClBaseCurveBlur}
+              handleDiameterBlur={handleClDiameterBlur}
               handleLensTypeBlur={handleLensTypeBlur}
             />
           )}

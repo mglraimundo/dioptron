@@ -18,15 +18,17 @@ interface Props {
   setField: <K extends keyof ClinicalSession>(field: K, value: ClinicalSession[K]) => void;
   setRefraction: (eye: Eye, field: RefractionField, value: string) => void;
   handleAddBlur: () => void;
+  handleBaseCurveBlur: () => void;
+  handleDiameterBlur: () => void;
   handleLensTypeBlur: () => void;
 }
 
-const ALL_REFRACTION_FIELDS = ['esfera', 'cilindro', 'eixo', 'addPP', 'curvaBase', 'diametro'] as const;
-const DIOPTER_FIELDS = ['esfera', 'cilindro', 'addPP'] as const;
-const DECIMAL_FIELDS = ['curvaBase', 'diametro'] as const;
-const EYES: Eye[] = ['od', 'oe'];
+const ALL_REFRACTION_FIELDS = ['sphere', 'cylinder', 'axis', 'addPP', 'baseCurve', 'diameter'] as const;
+const DIOPTER_FIELDS = ['sphere', 'cylinder', 'addPP'] as const;
+const DECIMAL_FIELDS = ['baseCurve', 'diameter'] as const;
+const EYES: Eye[] = ['od', 'os'];
 
-export function ContactLensPrescriptionForm({ session, provider, onProviderUpdate, setField, setRefraction, handleAddBlur, handleLensTypeBlur }: Props) {
+export function ContactLensPrescriptionForm({ session, provider, onProviderUpdate, setField, setRefraction, handleAddBlur, handleBaseCurveBlur, handleDiameterBlur, handleLensTypeBlur }: Props) {
   const [loading, setLoading] = useState<'pdf' | 'print' | null>(null);
   const [pdfError, setPdfError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
@@ -38,7 +40,7 @@ export function ContactLensPrescriptionForm({ session, provider, onProviderUpdat
     if (datePickerRef.current) datePickerRef.current.value = session.prescriptionDate;
   }, [session.prescriptionDate]);
 
-  const clEyes = { od: session.clOd, oe: session.clOe };
+  const clEyes = { od: session.clOd, os: session.clOs };
   const hasAnyRefraction = EYES.some(eye =>
     ALL_REFRACTION_FIELDS.some(f => clEyes[eye][f].trim() !== '')
   );
@@ -70,23 +72,23 @@ export function ContactLensPrescriptionForm({ session, provider, onProviderUpdat
     function formatEye(label: string, data: RefractionData, lensName: string): string {
       const add = parseFloat(data.addPP) || 0;
       const addPart = add !== 0 ? `, add ${data.addPP}` : '';
-      const cyl = parseFloat(data.cilindro) || 0;
-      const cylPart = cyl !== 0 ? ` (${data.cilindro} x ${data.eixo}°)` : '';
-      const cbPart = data.curvaBase ? `, CB ${data.curvaBase}` : '';
-      const diaPart = data.diametro ? `, Dia ${data.diametro}` : '';
+      const cyl = parseFloat(data.cylinder) || 0;
+      const cylPart = cyl !== 0 ? ` (${data.cylinder} x ${data.axis}°)` : '';
+      const cbPart = data.baseCurve ? `, CB ${data.baseCurve}` : '';
+      const diaPart = data.diameter ? `, Dia ${data.diameter}` : '';
       const lensPart = lensName.trim() ? `, ${lensName.trim()}` : '';
-      return `${label} ${data.esfera}${cylPart}${addPart}${cbPart}${diaPart}${lensPart}`;
+      return `${label} ${data.sphere}${cylPart}${addPart}${cbPart}${diaPart}${lensPart}`;
     }
 
     function isEyeEmpty(data: RefractionData, lensName: string): boolean {
-      return !data.esfera && !data.cilindro && !data.eixo && !data.addPP
-        && !data.curvaBase && !data.diametro && !lensName.trim();
+      return !data.sphere && !data.cylinder && !data.axis && !data.addPP
+        && !data.baseCurve && !data.diameter && !lensName.trim();
     }
 
     const lines = ['', 'R/ LC'];
     if (!isEyeEmpty(session.clOd, session.lensTypeOD)) lines.push(formatEye('OD', session.clOd, session.lensTypeOD));
-    if (!isEyeEmpty(session.clOe, session.lensTypeOE)) lines.push(formatEye('OE', session.clOe, session.lensTypeOE));
-    if (session.clObservacoes.trim()) lines.push(capitalize(session.clObservacoes.trim()));
+    if (!isEyeEmpty(session.clOs, session.lensTypeOS)) lines.push(formatEye('OE', session.clOs, session.lensTypeOS));
+    if (session.clNotes.trim()) lines.push(capitalize(session.clNotes.trim()));
 
     await navigator.clipboard.writeText(lines.join('\n'));
     setCopied(true);
@@ -145,10 +147,10 @@ export function ContactLensPrescriptionForm({ session, provider, onProviderUpdat
           <SectionDivider label="Prescrição" />
           <RefractionGrid
             od={session.clOd}
-            oe={session.clOe}
+            os={session.clOs}
             columns={CONTACT_LENS_COLUMNS}
             onChange={setRefraction}
-            onAddBlur={handleAddBlur}
+            onFieldBlur={{ addPP: handleAddBlur, baseCurve: handleBaseCurveBlur, diameter: handleDiameterBlur }}
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-7">
             <div className="flex flex-col gap-1">
@@ -173,8 +175,8 @@ export function ContactLensPrescriptionForm({ session, provider, onProviderUpdat
                 id="cl-lensTypeOE"
                 type="text"
                 autoComplete="off"
-                value={session.lensTypeOE}
-                onChange={e => setField('lensTypeOE', e.target.value)}
+                value={session.lensTypeOS}
+                onChange={e => setField('lensTypeOS', e.target.value)}
                 onBlur={handleLensTypeBlur}
                 className={`${inputClass} w-full`}
               />
@@ -187,8 +189,8 @@ export function ContactLensPrescriptionForm({ session, provider, onProviderUpdat
             <textarea
               id="cl-observacoes"
               autoComplete="off"
-              value={session.clObservacoes}
-              onChange={e => setField('clObservacoes', e.target.value)}
+              value={session.clNotes}
+              onChange={e => setField('clNotes', e.target.value)}
               rows={3}
               className={`${inputClass} w-full resize-none overflow-y-auto`}
             />
