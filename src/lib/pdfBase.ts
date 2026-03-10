@@ -25,7 +25,7 @@ export function addValue(data: RefractionData): string {
   return data.addPP;
 }
 
-export function buildHeaderBlock(title: string): Content {
+export function buildHeaderBlock(title: string, dateStr: string): Content {
   return {
     columns: [
       {
@@ -33,10 +33,10 @@ export function buildHeaderBlock(title: string): Content {
         width: 180,
       },
       {
-        text: title,
-        bold: true,
-        fontSize: 10,
-        alignment: 'right',
+        stack: [
+          { text: title, bold: true, fontSize: 10, alignment: 'right' },
+          { text: dateStr, fontSize: 9, alignment: 'right', margin: [0, 4, 0, 0] as [number, number, number, number] },
+        ],
         width: '*',
         margin: [0, 12, 0, 0] as [number, number, number, number],
       },
@@ -74,7 +74,7 @@ export function buildPatientBlock(session: ClinicalSession): Content {
   };
 }
 
-export function buildSignatureBlock(provider: ProviderConfig, dateStr: string): Content {
+export function buildSignatureBlock(provider: ProviderConfig): Content {
   const stack: Content[] = [
     { text: provider.providerName || '', bold: true, fontSize: 12, alignment: 'center' },
     { text: ' ', fontSize: 100 },
@@ -101,8 +101,6 @@ export function buildSignatureBlock(provider: ProviderConfig, dateStr: string): 
       margin: [0, 2, 0, 16] as [number, number, number, number],
     });
   }
-
-  stack.push({ text: dateStr, fontSize: 10, alignment: 'center', margin: [0, 0, 0, 0] as [number, number, number, number] });
 
   return {
     stack,
