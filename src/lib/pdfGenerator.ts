@@ -61,11 +61,11 @@ function buildDocContent(session: ClinicalSession, provider: ProviderConfig, dat
   }
 
   return [
-    buildHeaderBlock('PRESCRIÇÃO DE ÓCULOS'),
+    buildHeaderBlock('PRESCRIÇÃO DE ÓCULOS', dateStr),
     buildPatientBlock(session),
     makeUnifiedTable(session.od, session.os),
     ...notesContent,
-    buildSignatureBlock(provider, dateStr),
+    buildSignatureBlock(provider),
   ];
 }
 

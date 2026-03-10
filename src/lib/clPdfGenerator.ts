@@ -68,11 +68,11 @@ function buildDocContent(session: ClinicalSession, provider: ProviderConfig, dat
   }
 
   return [
-    buildHeaderBlock('PRESCRIÇÃO DE LENTES DE CONTACTO'),
+    buildHeaderBlock('PRESCRIÇÃO DE LENTES DE CONTACTO', dateStr),
     buildPatientBlock(session),
     makeUnifiedTable(session.clOd, session.clOs),
     ...notesContent,
-    buildSignatureBlock(provider, dateStr),
+    buildSignatureBlock(provider),
   ];
 }
 
