@@ -7,6 +7,7 @@ import LensTypeInput from './LensTypeInput';
 import { isDiopterValid, isoToDDMMYYYY, ddmmyyyyToISO, capitalize } from '../lib/formatters';
 import { inputClass } from '../lib/styles';
 import { SectionDivider } from './SectionDivider';
+import { generatePdf, printPdf } from '../lib/pdfGenerator';
 import type { Eye } from '../hooks/useClinicalSession';
 
 type RefractionField = keyof ClinicalSession['od'];
@@ -55,7 +56,6 @@ export function PrescriptionForm({ session, provider, onProviderUpdate, setField
     setLoading('pdf');
     setPdfError(null);
     try {
-      const { generatePdf } = await import('../lib/pdfGenerator');
       await generatePdf(session, provider);
     } catch (err) {
       setPdfError(err instanceof Error ? err.message : 'Erro ao gerar PDF');
@@ -92,7 +92,6 @@ export function PrescriptionForm({ session, provider, onProviderUpdate, setField
     setLoading('print');
     setPdfError(null);
     try {
-      const { printPdf } = await import('../lib/pdfGenerator');
       await printPdf(session, provider);
     } catch (err) {
       setPdfError(err instanceof Error ? err.message : 'Erro ao imprimir');

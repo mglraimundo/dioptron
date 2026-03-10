@@ -6,6 +6,7 @@ import { CONTACT_LENS_COLUMNS } from './refractionColumns';
 import { isDiopterValid, isDecimal2Valid, isoToDDMMYYYY, ddmmyyyyToISO, capitalize } from '../lib/formatters';
 import { inputClass } from '../lib/styles';
 import { SectionDivider } from './SectionDivider';
+import { generateClPdf, printClPdf } from '../lib/clPdfGenerator';
 import type { Eye } from '../hooks/useClinicalSession';
 
 type RefractionField = keyof ClinicalSession['od'];
@@ -57,7 +58,6 @@ export function ContactLensPrescriptionForm({ session, provider, onProviderUpdat
     setLoading('pdf');
     setPdfError(null);
     try {
-      const { generateClPdf } = await import('../lib/clPdfGenerator');
       await generateClPdf(session, provider);
     } catch (err) {
       setPdfError(err instanceof Error ? err.message : 'Erro ao gerar PDF');
@@ -97,7 +97,6 @@ export function ContactLensPrescriptionForm({ session, provider, onProviderUpdat
     setLoading('print');
     setPdfError(null);
     try {
-      const { printClPdf } = await import('../lib/clPdfGenerator');
       await printClPdf(session, provider);
     } catch (err) {
       setPdfError(err instanceof Error ? err.message : 'Erro ao imprimir');

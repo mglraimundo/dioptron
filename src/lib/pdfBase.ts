@@ -1,6 +1,7 @@
 import pdfMake from 'pdfmake/build/pdfmake';
 // @ts-expect-error — pdfmake standard font module has no types
 import pdfFonts from 'pdfmake/build/standard-fonts/Helvetica';
+import JsBarcode from 'jsbarcode';
 import type { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
 import type { ClinicalSession } from '../hooks/useClinicalSession';
 import type { ProviderConfig } from '../hooks/useProviderConfig';
@@ -44,17 +45,23 @@ export function buildHeaderBlock(title: string): Content {
   };
 }
 
+function generateBarcodeDataUrl(licenseNumber: string): string {
+  const canvas = document.createElement('canvas');
+  const barcodeText = `M${licenseNumber}`;
+  JsBarcode(canvas, barcodeText, {
+    format: 'CODE39',
+    width: 1,
+    height: 40,
+    displayValue: false,
+    margin: 0,
+  });
+  return canvas.toDataURL('image/png');
+}
+
 export function buildPatientBlock(session: ClinicalSession): Content {
-  const dateStr = isoToDDMMYYYY(session.prescriptionDate);
   const patientStack: Content[] = [
-    { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 0.5, lineColor: '#cbd5e1' }], margin: [0, 0, 0, 22] as [number, number, number, number] },
-    {
-      columns: [
-        { text: session.patientName.toUpperCase(), bold: true, fontSize: 16, width: '*' },
-        { text: dateStr, fontSize: 10, alignment: 'right', width: 'auto', margin: [0, 4, 0, 0] as [number, number, number, number] },
-      ],
-      margin: [0, 0, 0, 8] as [number, number, number, number],
-    },
+    { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 0.5, lineColor: '#cbd5e1' }], margin: [0, 0, 0, 60] as [number, number, number, number] },
+    { text: session.patientName.toUpperCase(), bold: true, fontSize: 14, margin: [0, 0, 0, 8] as [number, number, number, number] },
   ];
 
   if (session.healthSystemNumber) {
@@ -67,23 +74,32 @@ export function buildPatientBlock(session: ClinicalSession): Content {
   };
 }
 
-export function buildSignatureBlock(provider: ProviderConfig): Content {
-  const signatureStack: Content[] = [
-    { text: provider.providerName || '', bold: true, fontSize: 12, alignment: 'right' },
-    { text: ' ', fontSize: 70 },
+export function buildSignatureBlock(provider: ProviderConfig, dateStr: string): Content {
+  const stack: Content[] = [
+    { text: provider.providerName || '', bold: true, fontSize: 12, alignment: 'center' },
+    { text: ' ', fontSize: 100 },
+    { text: dateStr, fontSize: 10, alignment: 'center', margin: [0, 0, 0, 6] as [number, number, number, number] },
     {
       text: provider.licenseNumber
         ? `Médico Oftalmologista (OM nº ${provider.licenseNumber})`
         : 'Médico Oftalmologista',
       fontSize: 9,
-      alignment: 'right',
-      margin: [0, 0, 0, 2] as [number, number, number, number],
+      alignment: 'center',
+      margin: [0, 0, 0, 6] as [number, number, number, number],
     },
   ];
 
+  if (provider.licenseNumber) {
+    stack.push({
+      image: generateBarcodeDataUrl(provider.licenseNumber),
+      width: 120,
+      alignment: 'center',
+    } as Content);
+  }
+
   return {
-    stack: signatureStack,
-    margin: [0, 40, 0, 0] as [number, number, number, number],
+    stack,
+    margin: [0, 120, 0, 0] as [number, number, number, number],
   };
 }
 
@@ -94,7 +110,7 @@ export function wrapDocDefinition(content: Content[]): TDocumentDefinitions {
     content,
     footer: {
       text: FOOTER_TEXT,
-      fontSize: 8,
+      fontSize: 10,
       alignment: 'center',
       margin: [40, 20, 40, 0],
     },

@@ -1,7 +1,7 @@
 import type { Content, TableCell } from 'pdfmake/interfaces';
 import type { ClinicalSession, RefractionData } from '../hooks/useClinicalSession';
 import type { ProviderConfig } from '../hooks/useProviderConfig';
-import { capitalize } from './formatters';
+import { capitalize, isoToDDMMYYYY } from './formatters';
 import {
   ensureFonts, pdfMake, addValue,
   buildHeaderBlock, buildPatientBlock, buildSignatureBlock,
@@ -52,7 +52,7 @@ function makeUnifiedTable(od: RefractionData, oe: RefractionData): Content {
   };
 }
 
-function buildDocContent(session: ClinicalSession, provider: ProviderConfig): Content[] {
+function buildDocContent(session: ClinicalSession, provider: ProviderConfig, dateStr: string): Content[] {
   const notesContent: Content[] = [];
 
   if (session.lensTypeOD) {
@@ -72,19 +72,21 @@ function buildDocContent(session: ClinicalSession, provider: ProviderConfig): Co
     buildPatientBlock(session),
     makeUnifiedTable(session.clOd, session.clOe),
     ...notesContent,
-    buildSignatureBlock(provider),
+    buildSignatureBlock(provider, dateStr),
   ];
 }
 
 export async function generateClPdf(session: ClinicalSession, provider: ProviderConfig): Promise<void> {
   ensureFonts();
-  const docDefinition = wrapDocDefinition(buildDocContent(session, provider));
+  const dateStr = isoToDDMMYYYY(session.prescriptionDate);
+  const docDefinition = wrapDocDefinition(buildDocContent(session, provider, dateStr));
   const filename = buildFilename('receita_lc_', session);
   await pdfMake.createPdf(docDefinition).download(filename);
 }
 
 export async function printClPdf(session: ClinicalSession, provider: ProviderConfig): Promise<void> {
   ensureFonts();
-  const docDefinition = wrapDocDefinition(buildDocContent(session, provider));
+  const dateStr = isoToDDMMYYYY(session.prescriptionDate);
+  const docDefinition = wrapDocDefinition(buildDocContent(session, provider, dateStr));
   pdfMake.createPdf(docDefinition).print();
 }
