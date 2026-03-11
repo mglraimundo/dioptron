@@ -3,15 +3,30 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { PrescriptionForm } from './components/PrescriptionForm';
 import { ContactLensPrescriptionForm } from './components/ContactLensPrescriptionForm';
+import { BrandConfigSection } from './components/BrandConfigSection';
 import { useProviderConfig } from './hooks/useProviderConfig';
+import { useBrandConfig } from './hooks/useBrandConfig';
 import { useClinicalSession } from './hooks/useClinicalSession';
 
 type Tab = 'glasses' | 'contact-lenses';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('glasses');
-  const { config, updateField } = useProviderConfig();
+  const [isPersonal, setIsPersonal] = useState(
+    () => new URLSearchParams(window.location.search).has('personal')
+  );
+  const { config, updateField, removeSignature } = useProviderConfig();
+  const { config: brandConfig, updateField: updateBrandField, removeLogo } = useBrandConfig();
   const { session, setField, setRefraction, handleAddBlur, setClRefraction, handleClAddBlur, handleClBaseCurveBlur, handleClDiameterBlur, handleLensTypeBlur, clearSession } = useClinicalSession();
+
+  function activatePersonal() {
+    setIsPersonal(true);
+    history.replaceState(null, '', '?personal');
+  }
+  function deactivatePersonal() {
+    setIsPersonal(false);
+    history.replaceState(null, '', window.location.pathname);
+  }
 
   const tabBtn = (tab: Tab, label: string) => (
     <button
@@ -28,7 +43,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <Header />
+      <Header isPersonal={isPersonal} onActivate={activatePersonal} onDeactivate={deactivatePersonal} />
       <main className="max-w-4xl w-full mx-auto px-4 py-8 flex flex-col gap-6">
         <section className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
           {/* Card header with tab switcher */}
@@ -51,24 +66,35 @@ export default function App() {
               session={session}
               provider={config}
               onProviderUpdate={updateField}
+              onProviderRemoveSignature={removeSignature}
               setField={setField}
               setRefraction={setRefraction}
               handleAddBlur={handleAddBlur}
+              brand={isPersonal ? brandConfig : undefined}
             />
           ) : (
             <ContactLensPrescriptionForm
               session={session}
               provider={config}
               onProviderUpdate={updateField}
+              onProviderRemoveSignature={removeSignature}
               setField={setField}
               setRefraction={setClRefraction}
               handleAddBlur={handleClAddBlur}
               handleBaseCurveBlur={handleClBaseCurveBlur}
               handleDiameterBlur={handleClDiameterBlur}
               handleLensTypeBlur={handleLensTypeBlur}
+              brand={isPersonal ? brandConfig : undefined}
             />
           )}
         </section>
+        {isPersonal && (
+          <BrandConfigSection
+            config={brandConfig}
+            onUpdateField={updateBrandField}
+            onRemoveLogo={removeLogo}
+          />
+        )}
       </main>
       <Footer />
     </div>
