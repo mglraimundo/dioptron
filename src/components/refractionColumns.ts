@@ -9,17 +9,17 @@ export interface ColumnDef {
 }
 
 export const GLASSES_COLUMNS: ColumnDef[] = [
-  { label: 'Esfera', field: 'sphere', type: 'diopter' },
-  { label: 'Cilindro', field: 'cylinder', type: 'diopter' },
+  { label: 'ESF', field: 'sphere', type: 'diopter' },
+  { label: 'CIL', field: 'cylinder', type: 'diopter' },
   { label: 'Eixo', field: 'axis', type: 'axis' },
   { label: 'Add', field: 'addPP', type: 'diopter' },
 ];
 
 export const CONTACT_LENS_COLUMNS: ColumnDef[] = [
-  { label: 'Esfera', field: 'sphere', type: 'diopter' },
-  { label: 'Cilindro', field: 'cylinder', type: 'diopter' },
+  { label: 'ESF', field: 'sphere', type: 'diopter' },
+  { label: 'CIL', field: 'cylinder', type: 'diopter' },
   { label: 'Eixo', field: 'axis', type: 'axis' },
   { label: 'Add', field: 'addPP', type: 'diopter' },
-  { label: 'Curva Base', field: 'baseCurve', type: 'decimal' },
-  { label: 'Diâmetro', field: 'diameter', type: 'decimal' },
+  { label: 'CB', field: 'baseCurve', type: 'decimal' },
+  { label: 'DIA', field: 'diameter', type: 'decimal' },
 ];
