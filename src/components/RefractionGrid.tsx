@@ -65,7 +65,7 @@ export function RefractionGrid({ od, os, columns, onChange, onFieldBlur }: Props
             {columns.map(col => (
               <th
                 key={col.field}
-                className="px-1.5 py-2 text-xs font-medium text-slate-500 uppercase tracking-wide text-center min-w-[52px]"
+                className="px-1.5 py-2 text-xs font-medium text-slate-500 uppercase tracking-wide text-center min-w-[64px]"
               >
                 {col.label}
               </th>
