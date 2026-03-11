@@ -28,6 +28,8 @@ export interface ClinicalSession {
   lensTypeOD: string;
   lensTypeOS: string;
   clNotes: string;
+  instructionsTitle: string;
+  instructionsText: string;
 }
 
 function defaultRefraction(): RefractionData {
@@ -53,6 +55,8 @@ function defaultSession(): ClinicalSession {
     lensTypeOD: '',
     lensTypeOS: '',
     clNotes: '',
+    instructionsTitle: '',
+    instructionsText: '',
   };
 }
 

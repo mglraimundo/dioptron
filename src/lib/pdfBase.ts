@@ -132,7 +132,12 @@ export function wrapDocDefinition(content: Content[], brand?: BrandConfig): TDoc
 }
 
 export function buildFilename(prefix: string, session: ClinicalSession): string {
-  const dateForFile = session.prescriptionDate.replace(/-/g, '');
-  const safeName = sanitizeFilename(session.patientName);
-  return `${prefix}${safeName}_${dateForFile}.pdf`;
+  const words = session.patientName.trim().split(/\s+/);
+  const namePart = words.length > 1
+    ? `${words[0]}_${words[words.length - 1]}`
+    : words[0];
+  const name = sanitizeFilename(namePart).toLowerCase();
+  const hsn = session.healthSystemNumber.replace(/\s+/g, '').toLowerCase();
+  const date = session.prescriptionDate.replace(/-/g, '');
+  return `${prefix}${name}_${hsn}_${date}.pdf`;
 }

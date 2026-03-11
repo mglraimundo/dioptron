@@ -74,7 +74,7 @@ export async function generatePdf(session: ClinicalSession, provider: ProviderCo
   ensureFonts();
   const dateStr = isoToDDMMYYYY(session.prescriptionDate);
   const docDefinition = wrapDocDefinition(buildDocContent(session, provider, dateStr, brand), brand);
-  const filename = buildFilename('receita_', session);
+  const filename = buildFilename('rec_', session);
   await pdfMake.createPdf(docDefinition).download(filename);
 }
 

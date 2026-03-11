@@ -3,12 +3,13 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { PrescriptionForm } from './components/PrescriptionForm';
 import { ContactLensPrescriptionForm } from './components/ContactLensPrescriptionForm';
+import { BlankForm } from './components/BlankForm';
 import { BrandConfigSection } from './components/BrandConfigSection';
 import { useProviderConfig } from './hooks/useProviderConfig';
 import { useBrandConfig } from './hooks/useBrandConfig';
 import { useClinicalSession } from './hooks/useClinicalSession';
 
-type Tab = 'glasses' | 'contact-lenses';
+type Tab = 'glasses' | 'contact-lenses' | 'blank';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('glasses');
@@ -50,7 +51,8 @@ export default function App() {
           <div className="bg-emerald-50 border-b border-emerald-100 px-6 py-3 flex items-center justify-between">
             <nav className="flex gap-1 bg-white rounded-lg p-1 border border-emerald-200">
               {tabBtn('glasses', 'Óculos')}
-              {tabBtn('contact-lenses', 'Lentes Contacto')}
+              {tabBtn('contact-lenses', 'LC')}
+              {tabBtn('blank', 'Branco')}
             </nav>
             <button
               onClick={clearSession}
@@ -70,6 +72,15 @@ export default function App() {
               setField={setField}
               setRefraction={setRefraction}
               handleAddBlur={handleAddBlur}
+              brand={isPersonal ? brandConfig : undefined}
+            />
+          ) : activeTab === 'blank' ? (
+            <BlankForm
+              session={session}
+              provider={config}
+              onProviderUpdate={updateField}
+              onProviderRemoveSignature={removeSignature}
+              setField={setField}
               brand={isPersonal ? brandConfig : undefined}
             />
           ) : (
