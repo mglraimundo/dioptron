@@ -65,7 +65,7 @@ export function buildPatientBlock(session: ClinicalSession): Content {
   ];
 
   if (session.healthSystemNumber) {
-    patientStack.push({ text: session.healthSystemNumber, fontSize: 12, margin: [0, 0, 0, 0] as [number, number, number, number] });
+    patientStack.push({ text: session.healthSystemNumber.toUpperCase(), fontSize: 12, margin: [0, 0, 0, 0] as [number, number, number, number] });
   }
 
   return {
