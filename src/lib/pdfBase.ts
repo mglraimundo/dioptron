@@ -136,7 +136,7 @@ export function buildFilename(prefix: string, session: ClinicalSession): string 
   const namePart = words.length > 1
     ? `${words[0]}_${words[words.length - 1]}`
     : words[0];
-  const name = sanitizeFilename(namePart).toLowerCase();
+  const name = sanitizeFilename(namePart).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   const hsn = session.healthSystemNumber.replace(/\s+/g, '').toLowerCase();
   const date = session.prescriptionDate.replace(/-/g, '');
   return `${prefix}${name}_${hsn}_${date}.pdf`;

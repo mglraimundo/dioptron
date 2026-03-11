@@ -80,7 +80,7 @@ function buildBlankDocDefinition(session: ClinicalSession, provider: ProviderCon
 export async function generateBlankPdf(session: ClinicalSession, provider: ProviderConfig, brand?: BrandConfig): Promise<void> {
   ensureFonts();
   const docDefinition = buildBlankDocDefinition(session, provider, brand);
-  const filename = buildFilename('instrucoes_', session);
+  const filename = buildFilename('', session);
   await pdfMake.createPdf(docDefinition).download(filename);
 }
 
