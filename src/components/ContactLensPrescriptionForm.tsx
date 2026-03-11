@@ -7,7 +7,9 @@ import { isDiopterValid, isDecimal2Valid, isoToDDMMYYYY, ddmmyyyyToISO, capitali
 import { inputClass } from '../lib/styles';
 import { SectionDivider } from './SectionDivider';
 import { generateClPdf, printClPdf } from '../lib/clPdfGenerator';
+import { SignatureUpload } from './SignatureUpload';
 import type { Eye } from '../hooks/useClinicalSession';
+import type { BrandConfig } from '../hooks/useBrandConfig';
 
 type RefractionField = keyof ClinicalSession['od'];
 
@@ -15,12 +17,14 @@ interface Props {
   session: ClinicalSession;
   provider: ProviderConfig;
   onProviderUpdate: (field: keyof ProviderConfig, value: string) => void;
+  onProviderRemoveSignature: () => void;
   setField: <K extends keyof ClinicalSession>(field: K, value: ClinicalSession[K]) => void;
   setRefraction: (eye: Eye, field: RefractionField, value: string) => void;
   handleAddBlur: () => void;
   handleBaseCurveBlur: () => void;
   handleDiameterBlur: () => void;
   handleLensTypeBlur: () => void;
+  brand?: BrandConfig;
 }
 
 const ALL_REFRACTION_FIELDS = ['sphere', 'cylinder', 'axis', 'addPP', 'baseCurve', 'diameter'] as const;
@@ -28,7 +32,7 @@ const DIOPTER_FIELDS = ['sphere', 'cylinder', 'addPP'] as const;
 const DECIMAL_FIELDS = ['baseCurve', 'diameter'] as const;
 const EYES: Eye[] = ['od', 'os'];
 
-export function ContactLensPrescriptionForm({ session, provider, onProviderUpdate, setField, setRefraction, handleAddBlur, handleBaseCurveBlur, handleDiameterBlur, handleLensTypeBlur }: Props) {
+export function ContactLensPrescriptionForm({ session, provider, onProviderUpdate, onProviderRemoveSignature, setField, setRefraction, handleAddBlur, handleBaseCurveBlur, handleDiameterBlur, handleLensTypeBlur, brand }: Props) {
   const [loading, setLoading] = useState<'pdf' | 'print' | null>(null);
   const [pdfError, setPdfError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
@@ -60,7 +64,7 @@ export function ContactLensPrescriptionForm({ session, provider, onProviderUpdat
     setLoading('pdf');
     setPdfError(null);
     try {
-      await generateClPdf(session, provider);
+      await generateClPdf(session, provider, brand);
     } catch (err) {
       setPdfError(err instanceof Error ? err.message : 'Erro ao gerar PDF');
     } finally {
@@ -99,7 +103,7 @@ export function ContactLensPrescriptionForm({ session, provider, onProviderUpdat
     setLoading('print');
     setPdfError(null);
     try {
-      await printClPdf(session, provider);
+      await printClPdf(session, provider, brand);
     } catch (err) {
       setPdfError(err instanceof Error ? err.message : 'Erro ao imprimir');
     } finally {
@@ -200,7 +204,7 @@ export function ContactLensPrescriptionForm({ session, provider, onProviderUpdat
         {/* Provider settings */}
         <div>
           <SectionDivider label="Médico" />
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
               <label htmlFor="cl-providerName" className="text-sm font-medium text-slate-600">
                 Nome do Médico
@@ -273,6 +277,14 @@ export function ContactLensPrescriptionForm({ session, provider, onProviderUpdat
               {dateInvalid && (
                 <p className="text-xs text-red-500 mt-0.5">Data inválida</p>
               )}
+            </div>
+            <div className="flex flex-col gap-1 justify-center">
+              <label className="text-sm font-medium text-slate-600">Assinatura</label>
+              <SignatureUpload
+                signatureImage={provider.signatureImage}
+                onUpload={dataUrl => onProviderUpdate('signatureImage', dataUrl)}
+                onRemove={onProviderRemoveSignature}
+              />
             </div>
           </div>
         </div>

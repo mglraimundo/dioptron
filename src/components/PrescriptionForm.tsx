@@ -8,7 +8,9 @@ import { isDiopterValid, isoToDDMMYYYY, ddmmyyyyToISO, capitalize } from '../lib
 import { inputClass } from '../lib/styles';
 import { SectionDivider } from './SectionDivider';
 import { generatePdf, printPdf } from '../lib/pdfGenerator';
+import { SignatureUpload } from './SignatureUpload';
 import type { Eye } from '../hooks/useClinicalSession';
+import type { BrandConfig } from '../hooks/useBrandConfig';
 
 type RefractionField = keyof ClinicalSession['od'];
 
@@ -16,9 +18,11 @@ interface Props {
   session: ClinicalSession;
   provider: ProviderConfig;
   onProviderUpdate: (field: keyof ProviderConfig, value: string) => void;
+  onProviderRemoveSignature: () => void;
   setField: <K extends keyof ClinicalSession>(field: K, value: ClinicalSession[K]) => void;
   setRefraction: (eye: Eye, field: RefractionField, value: string) => void;
   handleAddBlur: () => void;
+  brand?: BrandConfig;
 }
 
 
@@ -26,7 +30,7 @@ const ALL_REFRACTION_FIELDS = ['sphere', 'cylinder', 'axis', 'addPP'] as const;
 const DIOPTER_FIELDS = ['sphere', 'cylinder', 'addPP'] as const;
 const EYES: Eye[] = ['od', 'os'];
 
-export function PrescriptionForm({ session, provider, onProviderUpdate, setField, setRefraction, handleAddBlur }: Props) {
+export function PrescriptionForm({ session, provider, onProviderUpdate, onProviderRemoveSignature, setField, setRefraction, handleAddBlur, brand }: Props) {
   const [loading, setLoading] = useState<'pdf' | 'print' | null>(null);
   const [pdfError, setPdfError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
@@ -56,7 +60,7 @@ export function PrescriptionForm({ session, provider, onProviderUpdate, setField
     setLoading('pdf');
     setPdfError(null);
     try {
-      await generatePdf(session, provider);
+      await generatePdf(session, provider, brand);
     } catch (err) {
       setPdfError(err instanceof Error ? err.message : 'Erro ao gerar PDF');
     } finally {
@@ -92,7 +96,7 @@ export function PrescriptionForm({ session, provider, onProviderUpdate, setField
     setLoading('print');
     setPdfError(null);
     try {
-      await printPdf(session, provider);
+      await printPdf(session, provider, brand);
     } catch (err) {
       setPdfError(err instanceof Error ? err.message : 'Erro ao imprimir');
     } finally {
@@ -171,7 +175,7 @@ export function PrescriptionForm({ session, provider, onProviderUpdate, setField
         {/* Provider settings */}
         <div>
           <SectionDivider label="Médico" />
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
               <label htmlFor="providerName" className="text-sm font-medium text-slate-600">
                 Nome do Médico
@@ -244,6 +248,14 @@ export function PrescriptionForm({ session, provider, onProviderUpdate, setField
               {dateInvalid && (
                 <p className="text-xs text-red-500 mt-0.5">Data inválida</p>
               )}
+            </div>
+            <div className="flex flex-col gap-1 justify-center">
+              <label className="text-sm font-medium text-slate-600">Assinatura</label>
+              <SignatureUpload
+                signatureImage={provider.signatureImage}
+                onUpload={dataUrl => onProviderUpdate('signatureImage', dataUrl)}
+                onRemove={onProviderRemoveSignature}
+              />
             </div>
           </div>
         </div>

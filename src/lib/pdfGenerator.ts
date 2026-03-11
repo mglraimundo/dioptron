@@ -1,6 +1,7 @@
 import type { Content, TableCell } from 'pdfmake/interfaces';
 import type { ClinicalSession, RefractionData } from '../hooks/useClinicalSession';
 import type { ProviderConfig } from '../hooks/useProviderConfig';
+import type { BrandConfig } from '../hooks/useBrandConfig';
 import { capitalize, isoToDDMMYYYY } from './formatters';
 import {
   ensureFonts, pdfMake, addValue,
@@ -48,7 +49,7 @@ function makeUnifiedTable(od: RefractionData, oe: RefractionData): Content {
   };
 }
 
-function buildDocContent(session: ClinicalSession, provider: ProviderConfig, dateStr: string): Content[] {
+function buildDocContent(session: ClinicalSession, provider: ProviderConfig, dateStr: string, brand?: BrandConfig): Content[] {
   const notesContent: Content[] = [];
 
   if (session.lensType) {
@@ -61,7 +62,7 @@ function buildDocContent(session: ClinicalSession, provider: ProviderConfig, dat
   }
 
   return [
-    buildHeaderBlock('PRESCRIÇÃO DE ÓCULOS', dateStr),
+    buildHeaderBlock('PRESCRIÇÃO DE ÓCULOS', dateStr, brand),
     buildPatientBlock(session),
     makeUnifiedTable(session.od, session.os),
     ...notesContent,
@@ -69,17 +70,17 @@ function buildDocContent(session: ClinicalSession, provider: ProviderConfig, dat
   ];
 }
 
-export async function generatePdf(session: ClinicalSession, provider: ProviderConfig): Promise<void> {
+export async function generatePdf(session: ClinicalSession, provider: ProviderConfig, brand?: BrandConfig): Promise<void> {
   ensureFonts();
   const dateStr = isoToDDMMYYYY(session.prescriptionDate);
-  const docDefinition = wrapDocDefinition(buildDocContent(session, provider, dateStr));
+  const docDefinition = wrapDocDefinition(buildDocContent(session, provider, dateStr, brand), brand);
   const filename = buildFilename('receita_', session);
   await pdfMake.createPdf(docDefinition).download(filename);
 }
 
-export async function printPdf(session: ClinicalSession, provider: ProviderConfig): Promise<void> {
+export async function printPdf(session: ClinicalSession, provider: ProviderConfig, brand?: BrandConfig): Promise<void> {
   ensureFonts();
   const dateStr = isoToDDMMYYYY(session.prescriptionDate);
-  const docDefinition = wrapDocDefinition(buildDocContent(session, provider, dateStr));
+  const docDefinition = wrapDocDefinition(buildDocContent(session, provider, dateStr, brand), brand);
   pdfMake.createPdf(docDefinition).print();
 }

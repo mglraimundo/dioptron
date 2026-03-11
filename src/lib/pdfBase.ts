@@ -5,6 +5,7 @@ import JsBarcode from 'jsbarcode';
 import type { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
 import type { ClinicalSession } from '../hooks/useClinicalSession';
 import type { ProviderConfig } from '../hooks/useProviderConfig';
+import type { BrandConfig } from '../hooks/useBrandConfig';
 import type { RefractionData } from '../hooks/useClinicalSession';
 import { INSTITUTION_LOGO, FOOTER_TEXT } from './constants';
 import { sanitizeFilename } from './formatters';
@@ -25,13 +26,15 @@ export function addValue(data: RefractionData): string {
   return data.addPP;
 }
 
-export function buildHeaderBlock(title: string, dateStr: string): Content {
+export function buildHeaderBlock(title: string, dateStr: string, brand?: BrandConfig): Content {
+  function logoColumn() {
+    if (!brand) return { image: INSTITUTION_LOGO, width: 180 };
+    if (brand.logoImage) return { image: brand.logoImage, fit: [180, 60] as [number, number] };
+    return { text: '', width: 180 };
+  }
   return {
     columns: [
-      {
-        image: INSTITUTION_LOGO,
-        width: 180,
-      },
+      logoColumn(),
       {
         stack: [
           { text: title, bold: true, fontSize: 10, alignment: 'right' },
@@ -77,7 +80,9 @@ export function buildPatientBlock(session: ClinicalSession): Content {
 export function buildSignatureBlock(provider: ProviderConfig): Content {
   const stack: Content[] = [
     { text: provider.providerName || '', bold: true, fontSize: 12, alignment: 'center' },
-    { text: ' ', fontSize: 100 },
+    provider.signatureImage
+      ? { image: provider.signatureImage, fit: [200, 70] as [number, number], alignment: 'center', margin: [0, 8, 0, 8] as [number, number, number, number] }
+      : { text: ' ', fontSize: 100 },
     {
       text: provider.licenseNumber
         ? `Médico Oftalmologista (OM nº ${provider.licenseNumber})`
@@ -108,13 +113,14 @@ export function buildSignatureBlock(provider: ProviderConfig): Content {
   };
 }
 
-export function wrapDocDefinition(content: Content[]): TDocumentDefinitions {
+export function wrapDocDefinition(content: Content[], brand?: BrandConfig): TDocumentDefinitions {
+  const footerText = brand ? (brand.footerText ?? '') : FOOTER_TEXT;
   return {
     pageSize: 'A4',
     pageMargins: [40, 40, 40, 80],
     content,
     footer: {
-      text: FOOTER_TEXT,
+      text: footerText,
       fontSize: 10,
       alignment: 'center',
       margin: [40, 20, 40, 0],
