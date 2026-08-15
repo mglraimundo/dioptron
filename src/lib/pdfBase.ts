@@ -78,38 +78,60 @@ export function buildPatientBlock(session: ClinicalSession): Content {
 }
 
 export function buildSignatureBlock(provider: ProviderConfig): Content {
+  const providerDisplayName = `${provider.salutation || 'Dr.'} ${provider.providerName || ''}`.trim();
+  const signatureSlot: Content = provider.signatureImage
+    ? {
+        image: provider.signatureImage,
+        fit: [160, 50] as [number, number],
+        alignment: 'center',
+      } as Content
+    : { text: '' };
+
   const stack: Content[] = [
-    { text: provider.providerName || '', bold: true, fontSize: 12, alignment: 'center' },
-    provider.signatureImage
-      ? { image: provider.signatureImage, fit: [200, 70] as [number, number], alignment: 'center', margin: [0, 8, 0, 8] as [number, number, number, number] }
-      : { text: ' ', fontSize: 100 },
+    {
+      table: {
+        widths: ['*'],
+        heights: [52],
+        body: [[signatureSlot]],
+      },
+      layout: 'noBorders',
+      margin: [0, 0, 0, 4] as [number, number, number, number],
+    },
+    {
+      text: providerDisplayName,
+      bold: true,
+      fontSize: 10.5,
+      alignment: 'center',
+      margin: [0, 0, 0, 4] as [number, number, number, number],
+    },
     {
       text: provider.licenseNumber
         ? `Médico Oftalmologista (OM nº ${provider.licenseNumber})`
         : 'Médico Oftalmologista',
-      fontSize: 9,
+      fontSize: 8.5,
       alignment: 'center',
-      margin: [0, 0, 0, 6] as [number, number, number, number],
+      margin: [0, 0, 0, 5] as [number, number, number, number],
     },
   ];
 
   if (provider.licenseNumber) {
     stack.push({
       image: generateBarcodeDataUrl(provider.licenseNumber),
-      width: 120,
+      width: 92,
       alignment: 'center',
     } as Content);
     stack.push({
       text: `*M${provider.licenseNumber}*`,
-      fontSize: 8,
+      fontSize: 7.5,
       alignment: 'center',
-      margin: [0, 2, 0, 16] as [number, number, number, number],
+      margin: [0, 1, 0, 0] as [number, number, number, number],
     });
   }
 
   return {
     stack,
-    margin: [0, 120, 0, 0] as [number, number, number, number],
+    margin: [0, 14, 0, 0] as [number, number, number, number],
+    unbreakable: true,
   };
 }
 

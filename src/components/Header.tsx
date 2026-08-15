@@ -40,7 +40,7 @@ export function Header({ isPersonal, onActivate, onDeactivate }: HeaderProps) {
         />
         <div>
           <h1 className="text-xl font-bold text-slate-800 leading-tight">
-            Rx Lentes · Dioptron
+            Rx · Dioptron
           </h1>
           <p className="text-sm text-slate-500 leading-tight">
             Serviço de Oftalmologia · ULS Coimbra

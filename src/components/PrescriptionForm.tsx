@@ -9,6 +9,7 @@ import { inputClass } from '../lib/styles';
 import { SectionDivider } from './SectionDivider';
 import { generatePdf, printPdf } from '../lib/pdfGenerator';
 import { SignatureUpload } from './SignatureUpload';
+import { ProviderNameField } from './ProviderNameField';
 import type { Eye } from '../hooks/useClinicalSession';
 import type { BrandConfig } from '../hooks/useBrandConfig';
 
@@ -176,18 +177,7 @@ export function PrescriptionForm({ session, provider, onProviderUpdate, onProvid
         <div>
           <SectionDivider label="Médico" />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="flex flex-col gap-1">
-              <label htmlFor="providerName" className="text-sm font-medium text-slate-600">
-                Nome do Médico
-              </label>
-              <input
-                id="providerName"
-                type="text"
-                value={provider.providerName}
-                onChange={e => onProviderUpdate('providerName', e.target.value)}
-                className={`${inputClass} w-full`}
-              />
-            </div>
+            <ProviderNameField inputId="providerName" provider={provider} onProviderUpdate={onProviderUpdate} />
             <div className="flex flex-col gap-1">
               <label htmlFor="licenseNumber" className="text-sm font-medium text-slate-600">
                 Nº Cédula OM
@@ -281,7 +271,7 @@ export function PrescriptionForm({ session, provider, onProviderUpdate, onProvid
                 onClick={handleCopyRx}
                 disabled={!canGenerate || loading !== null}
                 title={!canGenerate ? 'Preencha todos os campos obrigatórios e adicione pelo menos um valor de refração' : undefined}
-                aria-label="Registar Rx"
+                aria-label="Copiar"
                 className="flex items-center gap-2 px-2.5 sm:px-5 py-2.5 bg-slate-700 hover:bg-slate-800 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {copied ? (
@@ -294,7 +284,7 @@ export function PrescriptionForm({ session, provider, onProviderUpdate, onProvid
                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                   </svg>
                 )}
-                <span className="hidden sm:inline">{copied ? 'Copiado!' : 'Registar Rx'}</span>
+                <span className="hidden sm:inline">{copied ? 'Copiado!' : 'Copiar'}</span>
               </button>
               <button
                 onClick={handlePrint}

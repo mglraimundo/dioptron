@@ -6,6 +6,7 @@ import { isoToDDMMYYYY, ddmmyyyyToISO } from '../lib/formatters';
 import { inputClass } from '../lib/styles';
 import { SectionDivider } from './SectionDivider';
 import { SignatureUpload } from './SignatureUpload';
+import { ProviderNameField } from './ProviderNameField';
 import { generateBlankPdf, printBlankPdf } from '../lib/blankPdfGenerator';
 
 interface Props {
@@ -140,18 +141,7 @@ export function BlankForm({ session, provider, onProviderUpdate, onProviderRemov
       <div>
         <SectionDivider label="Médico" />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="flex flex-col gap-1">
-            <label htmlFor="blankProviderName" className="text-sm font-medium text-slate-600">
-              Nome do Médico
-            </label>
-            <input
-              id="blankProviderName"
-              type="text"
-              value={provider.providerName}
-              onChange={e => onProviderUpdate('providerName', e.target.value)}
-              className={`${inputClass} w-full`}
-            />
-          </div>
+          <ProviderNameField inputId="blankProviderName" provider={provider} onProviderUpdate={onProviderUpdate} />
           <div className="flex flex-col gap-1">
             <label htmlFor="blankLicenseNumber" className="text-sm font-medium text-slate-600">
               Nº Cédula OM
@@ -245,7 +235,7 @@ export function BlankForm({ session, provider, onProviderUpdate, onProviderRemov
             onClick={handleCopyRx}
             disabled={!canGenerate || loading !== null}
             title={!canGenerate ? 'Preencha todos os campos obrigatórios e adicione o texto das instruções' : undefined}
-            aria-label="Registar Rx"
+            aria-label="Copiar"
             className="flex items-center gap-2 px-2.5 sm:px-5 py-2.5 bg-slate-700 hover:bg-slate-800 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {copied ? (
@@ -258,7 +248,7 @@ export function BlankForm({ session, provider, onProviderUpdate, onProviderRemov
                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
               </svg>
             )}
-            <span className="hidden sm:inline">{copied ? 'Copiado!' : 'Registar Rx'}</span>
+            <span className="hidden sm:inline">{copied ? 'Copiado!' : 'Copiar'}</span>
           </button>
           <button
             onClick={handlePrint}

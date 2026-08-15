@@ -3,13 +3,14 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { PrescriptionForm } from './components/PrescriptionForm';
 import { ContactLensPrescriptionForm } from './components/ContactLensPrescriptionForm';
+import { DrivingCertificateForm } from './components/DrivingCertificateForm';
 import { BlankForm } from './components/BlankForm';
 import { BrandConfigSection } from './components/BrandConfigSection';
 import { useProviderConfig } from './hooks/useProviderConfig';
 import { useBrandConfig } from './hooks/useBrandConfig';
 import { useClinicalSession } from './hooks/useClinicalSession';
 
-type Tab = 'glasses' | 'contact-lenses' | 'blank';
+type Tab = 'glasses' | 'contact-lenses' | 'driving-certificate' | 'blank';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('glasses');
@@ -29,16 +30,17 @@ export default function App() {
     history.replaceState(null, '', window.location.pathname);
   }
 
-  const tabBtn = (tab: Tab, label: string) => (
+  const tabBtn = (tab: Tab, narrowLabel: string, wideLabel = narrowLabel) => (
     <button
       onClick={() => setActiveTab(tab)}
-      className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${
+      className={`px-2 sm:px-4 py-1.5 text-sm font-medium rounded-md whitespace-nowrap transition-colors ${
         activeTab === tab
           ? 'bg-emerald-600 text-white shadow-sm'
           : 'text-emerald-700 hover:bg-emerald-100'
       }`}
     >
-      {label}
+      <span className="sm:hidden">{narrowLabel}</span>
+      <span className="hidden sm:inline">{wideLabel}</span>
     </button>
   );
 
@@ -48,10 +50,11 @@ export default function App() {
       <main className="max-w-4xl w-full mx-auto px-4 py-8 flex flex-col gap-6">
         <section className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
           {/* Card header with tab switcher */}
-          <div className="bg-emerald-50 border-b border-emerald-100 px-6 py-3 flex items-center justify-between">
-            <nav className="flex gap-1 bg-white rounded-lg p-1 border border-emerald-200">
+          <div className="bg-emerald-50 border-b border-emerald-100 px-3 sm:px-6 py-3 flex items-center justify-between gap-2">
+            <nav className="flex gap-0.5 sm:gap-1 bg-white rounded-lg p-1 border border-emerald-200">
               {tabBtn('glasses', 'Óculos')}
-              {tabBtn('contact-lenses', 'LC')}
+              {tabBtn('contact-lenses', 'LC', 'Lentes Contacto')}
+              {tabBtn('driving-certificate', 'CC', 'Carta Condução')}
               {tabBtn('blank', 'Branco')}
             </nav>
             <button
@@ -72,6 +75,15 @@ export default function App() {
               setField={setField}
               setRefraction={setRefraction}
               handleAddBlur={handleAddBlur}
+              brand={isPersonal ? brandConfig : undefined}
+            />
+          ) : activeTab === 'driving-certificate' ? (
+            <DrivingCertificateForm
+              session={session}
+              provider={config}
+              onProviderUpdate={updateField}
+              onProviderRemoveSignature={removeSignature}
+              setField={setField}
               brand={isPersonal ? brandConfig : undefined}
             />
           ) : activeTab === 'blank' ? (

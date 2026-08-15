@@ -2,7 +2,7 @@
 
 **Optical Prescription Platform — Serviço de Oftalmologia, ULS Coimbra**
 
-Dioptron is a client-side web application for generating optical prescriptions for the department of Ophthalmology of ULS Coimbra, Portugal. The clinician enters the patient's refraction data and prints a ready-to-sign PDF — for eyeglasses, contact lenses, or a blank prescription template.
+Dioptron is a client-side web application for generating optical prescriptions and ophthalmology documents for the department of Ophthalmology of ULS Coimbra, Portugal. The clinician enters the required clinical data and prints a ready-to-sign PDF for eyeglasses, contact lenses, driving assessments, or a blank prescription template.
 
 No data is ever sent to a server. No clinical information is persisted anywhere. The doctor's name, medical license number, and signature are stored locally in the browser for convenience.
 
@@ -10,7 +10,7 @@ No data is ever sent to a server. No clinical information is persisted anywhere.
 
 ## Features
 
-- **Three prescription types** — eyeglasses, contact lenses, and blank prescription templates
+- **Four document types** — eyeglasses, contact lenses, driving assessments, and blank prescription templates
 - **Refraction grid** — structured OD/OS input for sphere, cylinder, axis, and addition power, with field-level validation (0.25-step diopters, 1–180° axis)
 - **Auto-sync fields** — addition power, base curve, and diameter automatically mirror from OD to OS until manually overridden
 - **Client-side PDF generation** — produces a formatted, institution-branded prescription using [pdfmake](https://pdfmake.github.io/docs/), ready to print and sign

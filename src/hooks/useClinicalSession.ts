@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { todayISO } from '../lib/formatters';
+import { defaultDrivingCertificate, type DrivingCertificateData } from '../lib/drivingCertificate';
 
 export interface RefractionData {
   sphere: string;
@@ -30,6 +31,7 @@ export interface ClinicalSession {
   clNotes: string;
   instructionsTitle: string;
   instructionsText: string;
+  drivingCertificate: DrivingCertificateData;
 }
 
 function defaultRefraction(): RefractionData {
@@ -57,6 +59,7 @@ function defaultSession(): ClinicalSession {
     clNotes: '',
     instructionsTitle: '',
     instructionsText: '',
+    drivingCertificate: defaultDrivingCertificate(),
   };
 }
 
