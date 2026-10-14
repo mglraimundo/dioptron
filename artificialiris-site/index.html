@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#12252c">
+<meta name="description" content="Evidence-informed HumanOptics ArtificialIris trephine planning using caliper or IOLMaster 700 white-to-white measurements, with optional direct STS and AL/K.">
+<title>ArtificialIris Sizer — Trephine Planning</title>
+<style>
+:root{color-scheme:light;--ink:#153038;--muted:#60717a;--dark:#142a32;--dark2:#1d3a43;--accent:#097d76;--accent-2:#dcf2ed;--paper:#f6f7f4;--card:#fff;--line:#dae3e1;--amber:#8f5b11;--amberbg:#fff7e8;--bluebg:#eaf3fa;--red:#ab3939;--redbg:#fff0ee;--round:17px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);line-height:1.5}a{color:var(--accent)}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #28aaa0;outline-offset:3px}.wrap{max-width:1130px;margin:auto;padding:0 25px}.topbar{background:var(--dark);color:#effcf8}.topline{display:flex;align-items:center;justify-content:space-between;min-height:76px;gap:15px}.brand{display:flex;align-items:center;gap:12px;font-weight:730;letter-spacing:-.03em;font-size:19px}.mark{display:grid;place-items:center;width:35px;height:35px;border:1.5px solid #8ad5c5;border-radius:50%;color:#b6efe5;position:relative;font-size:16px}.mark:after{content:"";position:absolute;width:8px;height:8px;border:1.5px solid currentColor;border-radius:50%}.brand span:last-child{opacity:.55;font-weight:400}.navpill{font-size:11px;color:#c2e5df;border:1px solid #55746f;border-radius:40px;padding:6px 12px;white-space:nowrap}.hero{background:var(--dark);color:white;padding:34px 0 49px;border-bottom-right-radius:38px;border-bottom-left-radius:38px}.eyebrow{text-transform:uppercase;letter-spacing:.15em;font-size:11px;font-weight:800;color:#91c7ba}.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:26px;align-items:end}h1{font-size:clamp(31px,4.3vw,52px);line-height:1.08;letter-spacing:-.055em;max-width:750px;font-weight:720;margin:13px 0 15px}h1 em{color:#a8e2d4;font-style:normal}.hero p{max-width:680px;margin:0;color:#d1e2e2;font-size:15px}.hero-aside{border-left:1px solid #3d5960;padding:8px 0 8px 18px;font-size:12px;line-height:1.7;color:#bad0d2}.hero-aside strong{display:block;color:white;font-size:14px;margin-bottom:5px}.page{padding-top:29px;padding-bottom:70px}.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:15px;margin:0 0 14px}.section-head h2{font-size:19px;letter-spacing:-.025em;margin:0}.section-head small{font-size:12px;color:var(--muted)}.layout{display:grid;grid-template-columns:370px minmax(0,1fr);align-items:start;gap:20px}.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--round);box-shadow:0 5px 24px rgba(11,38,44,.035);overflow:hidden}.panel-pad{padding:24px}.step{display:inline-grid;place-items:center;width:23px;height:23px;border-radius:50%;background:var(--accent-2);color:#11736b;font-size:12px;font-weight:800;margin-right:7px}.panel-h{font-weight:760;letter-spacing:-.02em;font-size:16px}.subtle{color:var(--muted);font-size:12px}.field{margin-top:19px}.field label{font-size:13px;font-weight:720;display:block;margin-bottom:8px}.field label small{font-weight:450;color:var(--muted);margin-left:5px}.input-unit{position:relative}.input-unit input{display:block;width:100%;border:1px solid #cddad7;border-radius:10px;background:white;color:var(--ink);font-size:20px;font-weight:650;letter-spacing:-.02em;padding:12px 64px 12px 13px;transition:border-color .1s}.input-unit input:focus{border-color:var(--accent)}.input-unit .unit{position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:13px;color:#768a90}.switch{display:grid;grid-template-columns:1fr 1fr;gap:5px;background:#f0f3f2;border:1px solid #e3eae8;padding:5px;border-radius:12px;margin-top:18px}.switch button{border:0;border-radius:8px;background:none;padding:11px 7px;font-size:13px;font-weight:680;color:#61757b}.switch button[aria-pressed="true"]{background:white;color:#15574f;box-shadow:0 2px 9px #213e4215}.fieldgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.fieldgrid .field label{min-height:34px}.fieldgrid input{font-size:18px}.rule{height:1px;background:var(--line);margin:24px 0}.optional{margin-top:20px}.optional summary{font-weight:720;font-size:14px;cursor:pointer}.optional summary span{font-weight:450;color:var(--muted);font-size:12px}.info{font-size:12px;color:var(--muted);margin:8px 0 0;line-height:1.55}.note{border-radius:10px;padding:11px 13px;font-size:12px;line-height:1.55;margin-top:16px;background:#f1f6f5;color:#476465}.hidden{display:none!important}.output{display:grid;gap:13px}.results{display:grid;grid-template-columns:1fr 1fr;gap:13px}.result{padding:20px 21px;position:relative;min-height:194px}.result.featured{background:#eff8f5;border-color:#d3e9e1}.result.bag{grid-column:1/-1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:15px;align-items:center}.r-top{display:flex;justify-content:space-between;align-items:center;gap:9px;margin-bottom:14px}.r-title{font-weight:760;letter-spacing:-.016em;font-size:15px}.tag{font-size:10px;letter-spacing:.02em;font-weight:750;white-space:nowrap;padding:4px 9px;border-radius:20px;background:#e0efe9;color:#236c61}.tag.warn{background:#faeddb;color:#956314}.tag.neutral{background:#edf1f2;color:#536a73}.big{font-size:clamp(34px,4vw,47px);font-weight:770;letter-spacing:-.07em;line-height:1}.big small{font-size:17px;letter-spacing:0;color:#657980;font-weight:550}.r-desc{margin:11px 0 0;font-size:12px;color:#4e6b6c;line-height:1.5}.bag .r-top{margin-bottom:8px}.bag .r-desc{margin-top:0;max-width:420px}.bag .big{font-size:35px;white-space:nowrap}.flags{display:grid;gap:9px}.flag{border-radius:11px;padding:12px 14px;display:flex;gap:10px;align-items:start;font-size:12px;line-height:1.6;border:1px solid #edd9b1;background:var(--amberbg);color:#745015}.flag.infoflag{background:#eef5f9;border-color:#d3e2ee;color:#3a6374}.flag.alert{background:var(--redbg);border-color:#f0ccc6;color:#9b3e37}.symbol{font-weight:850;flex:none;margin-top:0}.detail{padding:20px 23px}.detail summary{font-size:14px;font-weight:740;cursor:pointer}.detail-grid{display:grid;grid-template-columns:1fr auto;gap:9px 10px;margin-top:20px;font-size:13px}.detail-grid .dim{color:var(--muted)}.detail-grid .val{text-align:right;font-variant-numeric:tabular-nums;font-weight:680}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:11px}.btn{border-radius:10px;padding:12px 15px;font-size:13px;font-weight:730;border:1px solid #ccd9d6;background:white;color:#214b50}.btn.primary{background:var(--dark);color:white;border-color:var(--dark)}.btn:hover{filter:brightness(.96)}.ribbon{margin-top:9px;color:#70838a;font-size:11px}.support{margin-top:27px}.support h2{font-size:20px;letter-spacing:-.025em;margin:0 0 14px}.evidence{display:grid;grid-template-columns:1fr 1fr;gap:15px}.evidence article{padding:20px}.evidence h3{font-size:14px;margin:0 0 9px}.evidence p{font-size:12px;color:#5d7377;margin:0 0 8px;line-height:1.7}.formula{display:block;overflow-wrap:anywhere;background:#f2f6f5;border-radius:8px;padding:11px 12px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;color:#2e5b58}.sources{margin-top:25px;border-top:1px solid var(--line);padding-top:17px}.sources h3{font-size:14px;margin:0 0 8px}.sources ol{padding-left:19px;margin:0;color:#5d7377;font-size:12px;line-height:2}.sources li a{font-weight:650}.foot{font-size:11px;color:#718188;margin-top:20px}.validerr{border:1px solid #ebc0b8;background:#fff3f0;color:#8a3931;border-radius:10px;font-size:13px;padding:15px}.micro{color:#5d7377;font-size:11px;margin-top:10px}footer{padding:24px 0 35px;border-top:1px solid var(--line);color:#829197;font-size:11px}footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:15px}.preview-label{font-size:12px;color:#73868c;font-weight:650;letter-spacing:.08em;text-transform:uppercase;margin:0 0 12px}
+@media(max-width:860px){.layout{grid-template-columns:1fr}.panel-pad{padding:21px}.hero-grid{grid-template-columns:1fr}.hero-aside{display:none}.hero{padding-top:23px;padding-bottom:36px}.output{gap:11px}}@media(max-width:510px){.wrap{padding-left:16px;padding-right:16px}.topline{min-height:65px}.brand{font-size:17px}.navpill{font-size:10px}.results{grid-template-columns:1fr}.result.bag{grid-column:auto}.result{min-height:0}.result.bag{display:block}.bag .big{margin-top:14px}.evidence{grid-template-columns:1fr}.section-head{display:block}.section-head small{display:block;margin-top:2px}.fieldgrid .field label{min-height:0}.fieldgrid{grid-template-columns:1fr 1fr}.fieldgrid label{font-size:12px}.hero{border-bottom-right-radius:24px;border-bottom-left-radius:24px}}@media print{body{background:#fff}.topbar,.hero,.actions,footer{display:none!important}.page{padding:10px 0}.wrap{max-width:none}.panel{box-shadow:none;break-inside:avoid}.layout{grid-template-columns:35% 1fr}.sources{break-before:page}h1{font-size:25px}.navpill{display:none}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="wrap topline"><div class="brand"><span class="mark">◎</span><div>IRIS<span> / SIZE</span></div></div><div class="navpill">CLINICAL PLANNING TOOL · v1.0</div></div></header>
+<section class="hero"><div class="wrap hero-grid"><div><div class="eyebrow">HumanOptics CUSTOMFLEX / ArtificialIris</div><h1>Trephine planning, <em>with the evidence visible.</em></h1><p>Compare WTW-based sulcus estimates and a biometric capsular-bag model. Designed for surgical planning when direct intraocular sizing is unavailable.</p></div><div class="hero-aside"><strong>Three implantation planes</strong>Passive sulcus · Sutured sulcus · Capsular bag<br><br>Measurements stay in your browser.<br>No account or patient data stored.</div></div></section>
+<main class="wrap page">
+<div class="section-head"><h2><span class="step">1</span> Measurements</h2><small>All lengths in millimetres · no patient identifiers</small></div>
+<div class="layout">
+<section class="panel panel-pad" aria-label="Calculator measurements">
+<div class="panel-h">Horizontal white-to-white</div><div class="subtle">Select the instrument that produced your measurement.</div>
+<div class="switch" role="group" aria-label="WTW instrument">
+<button type="button" id="source-caliper" aria-pressed="true">Manual caliper</button>
+<button type="button" id="source-iol" aria-pressed="false">IOLMaster 700</button>
+</div>
+<div class="field"><label for="wtw">Horizontal WTW</label><div class="input-unit"><input id="wtw" inputmode="decimal" autocomplete="off" value="11.7" aria-describedby="wtw-context"><span class="unit">mm</span></div><p class="info" id="wtw-context">The manufacturer’s +0.5 mm rule was formulated for horizontal WTW caliper measurements.</p></div>
+<div id="caliper-cross" class="field hidden"><label for="caliper-optional">Additional manual caliper WTW <small>optional</small></label><div class="input-unit"><input id="caliper-optional" inputmode="decimal" autocomplete="off" placeholder="e.g. 11.7"><span class="unit">mm</span></div><p class="info">If supplied, the direct caliper value replaces the IOLMaster-derived proxy for calculations.</p></div>
+<div class="rule"></div>
+<div class="panel-h">Direct anatomical measurement <span class="subtle">(optional)</span></div>
+<div class="field"><label for="sts">Smallest STS diameter <small>UBM / intraoperative</small></label><div class="input-unit"><input id="sts" inputmode="decimal" autocomplete="off" placeholder="Not available"><span class="unit">mm</span></div><p class="info">Overrides WTW estimates for both sulcus techniques. Use the smallest reliably measured sulcus meridian, not just horizontal STS.</p></div>
+<details class="optional" id="biometry-details" open><summary>Biometry for capsular bag <span>· optional AL + K</span></summary>
+<div class="fieldgrid"><div class="field"><label for="al">Axial length <small>AL</small></label><div class="input-unit"><input id="al" inputmode="decimal" autocomplete="off" placeholder="e.g. 24.0"><span class="unit">mm</span></div></div><div class="field"><label for="k">Mean keratometry <small>K</small></label><div class="input-unit"><input id="k" inputmode="decimal" autocomplete="off" placeholder="e.g. 43.0"><span class="unit">D</span></div></div></div>
+<p class="info">The Vass regression estimates the bag diameter; subtracting 0.5 mm then rounds to the nearest 0.5 mm trephine. This combination is exploratory, not validated.</p></details>
+<div class="note">No measured WTW-to-sulcus method is sufficiently accurate to exclude an individual sizing error. For passive fixation, direct STS measurement is preferable.</div>
+</section>
+<section class="output" aria-label="Calculated sizing results" aria-live="polite">
+<div class="section-head" style="margin:0"><h2><span class="step">2</span> Planning estimates</h2><small id="context">Caliper-based · example values</small></div>
+<div id="error" class="validerr hidden"></div>
+<div id="calculated">
+<div class="results">
+<article class="panel result featured"><div class="r-top"><div class="r-title">Passive sulcus</div><span id="passive-tag" class="tag">WTW rule</span></div><div class="big" id="passive-value">12.0 <small>mm</small></div><p class="r-desc" id="passive-desc">Manufacturer’s Koch rule, cross-checked against a published STS regression.</p></article>
+<article class="panel result"><div class="r-top"><div class="r-title">Sutured sulcus</div><span id="suture-tag" class="tag neutral">Undersized</span></div><div class="big" id="suture-value">11.0 <small>mm</small></div><p class="r-desc" id="suture-desc">≥1 mm smaller than the estimated sulcus diameter.</p></article>
+<article class="panel result bag"><div><div class="r-top"><div class="r-title">Capsular bag</div><span id="bag-tag" class="tag neutral">Typical adult</span></div><p class="r-desc" id="bag-desc">Manufacturer’s usual adult size. Add AL and K for an exploratory bag estimate.</p></div><div class="big" id="bag-value">10.0 <small>mm</small></div></article>
+</div>
+<div class="flags" id="flags"></div>
+<details class="panel detail" open><summary>Calculation breakdown &amp; method limitations</summary><div class="detail-grid" id="breakdown"></div><p class="micro" id="limitation"></p></details>
+</div>
+<div class="actions"><button class="btn primary" id="copy" type="button">Copy planning summary</button><button class="btn" id="print" type="button">Print / Save as PDF</button><button class="btn" id="reset" type="button">Reset</button></div>
+<div class="ribbon">Estimates only. Do not trephine solely from a calculator result. The implanted eye’s anatomy, model, intended fixation, and intraoperative fit determine the final size.</div>
+</section></div>
+<section class="support"><h2>Methods and interpretation</h2><div class="evidence">
+<article class="panel"><h3>01 · Passive sulcus</h3><p>HumanOptics recommends the smallest estimated sulcus diameter. Its practical horizontal WTW rule uses <b>+0.5 mm, rounded down</b> to the next half-millimetre.</p><code class="formula">floor[2 × (WTW_caliper + 0.5)] / 2</code><p style="margin-top:10px">A parallel Hashemian regression estimates horizontal STS. Agreement is not proof of fit, as both depend on WTW.</p></article>
+<article class="panel"><h3>02 · Sutured sulcus</h3><p>The 2026 manufacturer IFU advises a diameter <b>at least 1 mm smaller</b> than the sulcus. This planner floors the derived STS minus 1.0 mm to a 0.5 mm trephine.</p><code class="formula">floor[2 × (STS_est − 1.0)] / 2</code><p style="margin-top:10px">This is a rule applied to an imperfect STS estimate, not an independently validated sutured sizing equation.</p></article>
+<article class="panel"><h3>03 · Capsular bag</h3><p>Vass et al. derived an AL/K regression (70 eyes with CTR, R² ≈ 0.315). Crawford et al. used measured bag diameter minus 0.5 mm. Combining the two is exploratory.</p><code class="formula">Bag = 3.44 − 0.056K + 0.713AL − 0.0135AL²</code><p style="margin-top:10px">Use the evacuated bag after CTR placement to confirm. Typical adult ArtificialIris diameter is around 10 mm.</p></article>
+<article class="panel"><h3>04 · IOLMaster 700 adjustment</h3><p>There is <b>no validated IOLMaster 700 → STS conversion</b> for ArtificialIris. In one 107-eye study, IOLMaster 700 WTW averaged 12.14 mm versus 11.45 mm manually.</p><code class="formula">Caliper proxy = WTW_700 − 0.69 mm</code><p style="margin-top:10px">This is a <b>between-device mean offset, not an individual conversion</b>. Outputs using it are clearly labelled exploratory. Enter an actual caliper WTW when possible.</p></article>
+</div></section>
+<section class="sources"><h3>Primary literature &amp; manufacturer instructions</h3><ol>
+<li><a href="https://www.humanoptics.com/wp-content/uploads/2026/04/2026-01_AI-Standard_ROW-V5.2.pdf" target="_blank" rel="noopener">HumanOptics ARTIFICIALIRIS IFU (2026)</a>, sections 11–12. Passive sulcus: estimated smallest sulcus diameter; sutured: ≥1 mm undersized; bag: usually 10 mm.</li>
+<li><a href="https://www.humanoptics.com/wp-content/uploads/2018/09/AI_Sizing_eng.pdf" target="_blank" rel="noopener">HumanOptics ArtificialIris Sizing Guide (2017)</a>. Koch WTW +0.5 mm rule and routine trephine ranges.</li>
+<li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6127356/" target="_blank" rel="noopener">Hashemian et al., Journal of Current Ophthalmology (2018)</a>. STS = 0.796 + 0.973 × caliper WTW; high-myopia cohort; 95% limits of agreement approximately ±0.55 mm.</li>
+<li><a href="https://pubmed.ncbi.nlm.nih.gov/36182955/" target="_blank" rel="noopener">Ang et al., Eye and Vision (2022)</a>. IOLMaster 700 versus manual caliper WTW differ and are not interchangeable.</li>
+<li><a href="https://pubmed.ncbi.nlm.nih.gov/10511938/" target="_blank" rel="noopener">Vass et al., JCRS (1999)</a>. Capsular-bag diameter regression; R² = 0.3145.</li>
+<li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9542440/" target="_blank" rel="noopener">Crawford et al., Clinical &amp; Experimental Ophthalmology (2022)</a>. Endocapsular ArtificialIris, bag size minus 0.5 mm.</li>
+<li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2649749/" target="_blank" rel="noopener">Reinstein et al., J Refract Surg (2009)</a>. WTW-based prediction of STS weak (95% prediction interval approximately ±1.11 mm).</li>
+</ol><p class="foot">Independent educational tool, not affiliated with HumanOptics or ZEISS. This software has not been clinically validated as a surgical sizing device. No server, cookies, analytics or persistent local storage are used.</p></section>
+</main>
+<footer><div class="wrap"><span>IRIS / SIZE · Evidence-informed trephine planning</span><span>v1.0 · 14 October 2026</span></div></footer>
+<script>
+(function(){
+"use strict";
+var source="caliper";
+var remembered={caliper:"11.7",iol:"12.3"};
+var el=function(id){return document.getElementById(id);};
+var nums=["wtw","caliper-optional","sts","al","k"];
+var parse=function(s){if(!s||!s.trim())return null;var n=Number(s.trim().replace(",","."));return Number.isFinite(n)?n:NaN;};
+var down=function(n){return Math.floor(n*2+0.00000001)/2;};
+var nearest=function(n){return Math.round(n*2)/2;};
+var fmt=function(n,d){return n.toFixed(d==null?1:d);};
+var inRange=function(n,a,b){return n===null || (Number.isFinite(n)&&n>=a&&n<=b);};
+var addFlag=function(type,msg){var div=document.createElement("div");div.className="flag"+(type==="alert"?" alert":type==="info"?" infoflag":"");var sym=document.createElement("span");sym.className="symbol";sym.textContent=type==="alert"?"!":type==="info"?"i":"!";var content=document.createElement("span");content.textContent=msg;div.append(sym,content);el("flags").appendChild(div);};
+var addDetail=function(label,value){var a=document.createElement("span");a.className="dim";a.textContent=label;var b=document.createElement("span");b.className="val";b.textContent=value;el("breakdown").append(a,b);};
+var setResult=function(id,val){el(id).innerHTML=Number.isFinite(val)?fmt(val)+" <small>mm</small>":"—";};
+var setTag=function(id,txt,klass){el(id).className="tag"+(klass?" "+klass:"");el(id).textContent=txt;};
+var lastResult=null;
+function calc(){
+var w=parse(el("wtw").value),cross=parse(el("caliper-optional").value),sts=parse(el("sts").value),al=parse(el("al").value),k=parse(el("k").value);
+var errors=[];
+if(!inRange(w,8,16)||w===null)errors.push("Enter a horizontal WTW from 8.0 to 16.0 mm.");
+if(!inRange(cross,8,16))errors.push("Additional caliper WTW must be 8.0–16.0 mm.");
+if(!inRange(sts,8,15))errors.push("Smallest measured STS must be 8.0–15.0 mm.");
+if(!inRange(al,14,38))errors.push("AL must be 14–38 mm.");
+if(!inRange(k,30,60))errors.push("Mean K must be 30–60 D.");
+el("error").classList.toggle("hidden",errors.length===0);el("calculated").classList.toggle("hidden",errors.length!==0);el("error").textContent=errors.join(" ");
+el("copy").disabled=errors.length>0;el("print").disabled=errors.length>0;
+if(errors.length){lastResult=null;return;}
+var hasRealCaliper=source==="caliper"||cross!==null;
+var adjustedWtw=source==="caliper"?w:cross!==null?cross:w-0.69;
+var stsHashemian=0.796+0.973*adjustedWtw;
+var nativeKoch=down(adjustedWtw+0.5),nativeHashemian=down(stsHashemian);
+var passive=sts!==null?down(sts):nativeKoch;
+var sutured=sts!==null?down(sts-1):down(stsHashemian-1);
+var bagExpected=al!==null&&k!==null?3.44-0.056*k+0.713*al-0.0135*al*al:null;
+var bagTarget=bagExpected===null?null:bagExpected-0.5;
+var bag=bagTarget===null?10:nearest(bagTarget);
+var goodMethod=sts!==null?"direct STS":hasRealCaliper?"caliper":"device-offset";
+var isExploratory=!hasRealCaliper&&sts===null;
+el("flags").textContent="";el("breakdown").textContent="";
+setResult("passive-value",passive);setResult("suture-value",sutured);setResult("bag-value",bag);
+setTag("passive-tag",sts!==null?"Measured STS":isExploratory?"Exploratory":"Koch WTW rule",isExploratory?"warn":"");
+setTag("suture-tag",sts!==null?"Measured STS":isExploratory?"Exploratory":"STS regression",isExploratory?"warn":"neutral");
+setTag("bag-tag",bagTarget===null?"Typical adult":"AL / K model",bagTarget===null?"neutral":"warn");
+el("passive-desc").textContent=sts!==null?"Smallest measured STS rounded down to a 0.5 mm trephine.":isExploratory?"Device-adjusted WTW + 0.5 mm, rounded down. Exploratory: conversion is not validated.":"HumanOptics WTW + 0.5 mm, rounded down; cross-checked with Hashemian.";
+el("suture-desc").textContent=sts!==null?"Measured smallest STS − 1.0 mm, rounded down.":"Hashemian-derived STS − 1.0 mm, rounded down. This is not a validated ArtificialIris sizing regression.";
+el("bag-desc").textContent=bagTarget===null?"Manufacturer’s usual adult size; enter AL and mean K to see the exploratory Vass/Crawford calculation.":"Vass predicted bag "+fmt(bagExpected,2)+" mm; target after −0.5 mm = "+fmt(bagTarget,2)+" mm, rounded to nearest trephine.";
+el("context").textContent=sts!==null?"Smallest STS measurement takes precedence":source==="caliper"?"Manual-caliper planning":cross!==null?"IOLMaster + manual cross-check":"IOLMaster-only · exploratory";
+if(isExploratory)addFlag("alert","IOLMaster 700-only estimate: the −0.69 mm adjustment is a published average difference, not a validated patient-level conversion. Do not choose a trephine from this result alone; obtain manual WTW or direct STS if feasible.");
+if(source==="iol"&&cross!==null&&Math.abs(w-cross)>0.4)addFlag("info","IOLMaster and actual caliper WTW differ by "+fmt(Math.abs(w-cross),2)+" mm. The caliper measurement is used for the WTW-based calculations.");
+if(sts===null&&hasRealCaliper&&nativeKoch!==nativeHashemian)addFlag("warning","Koch and Hashemian estimates round to different trephine sizes ("+fmt(nativeKoch)+" versus "+fmt(nativeHashemian)+" mm). Investigate anatomy rather than blending the predictions.");
+if(sts===null&&hasRealCaliper&&(adjustedWtw<10.6||adjustedWtw>12.8))addFlag("warning","Caliper WTW is outside the 10.6–12.8 mm range in the Hashemian study; the regression is being extrapolated.");
+if(source==="iol"&&!hasRealCaliper&&adjustedWtw<10.6)addFlag("warning","The device-adjusted proxy is outside the calibration range of the source caliper regression.");
+if(sts!==null)addFlag("info","Direct STS overrides WTW for both sulcus methods, but review meridian, image quality and pressurized-globe conditions. Confirm implant centering and fit intraoperatively.");
+if(sts===null)addFlag("warning","Horizontal WTW does not reliably identify the smallest sulcus meridian. Passive sulcus sizing is especially sensitive to this uncertainty.");
+if((al===null)!==(k===null))addFlag("warning","Enter both axial length and mean K to calculate the exploratory capsular-bag estimate; otherwise the usual 10.0 mm adult size is shown.");
+if(bagTarget!==null&&(al<21||al>27))addFlag("warning","AL is outside a commonly encountered adult range. Vass regression may be unreliable in extreme or abnormal eyes; use the actual evacuated capsular bag with CTR.");
+if(bag<8||bag>12.5||passive<8||passive>12.5||sutured<8||sutured>12.5)addFlag("alert","At least one proposed size falls outside the 8.0–12.5 mm trephine range. This is not an available standard trephine selection.");
+if(bagTarget!==null&&(bag<9||bag>10))addFlag("warning","The modeled bag trephine is outside the manufacturer's routine 9–10 mm bag sizes. Consider direct capsular assessment rather than trusting the regression.");
+addDetail("Horizontal WTW ("+(source==="caliper"?"manual caliper":"IOLMaster 700")+")",fmt(w,2)+" mm");
+if(source==="iol"){addDetail("Caliper "+(cross===null?"proxy (IOL −0.69)":"measured"),fmt(adjustedWtw,2)+" mm");addDetail("Unadjusted IOL +0.5 comparator",fmt(down(w+0.5))+" mm");}
+if(sts!==null)addDetail("Smallest directly measured STS",fmt(sts,2)+" mm");
+addDetail("Hashemian estimated horizontal STS",fmt(stsHashemian,2)+" mm");
+addDetail("Koch-caliper passive comparator",fmt(nativeKoch)+" mm");
+addDetail("Hashemian passive comparator",fmt(nativeHashemian)+" mm");
+addDetail("Sutured: STS estimate −1.0, down",fmt(sutured)+" mm");
+if(bagExpected!==null){addDetail("Vass predicted bag diameter",fmt(bagExpected,2)+" mm");addDetail("Crawford-style target: bag −0.5",fmt(bagTarget,2)+" mm");addDetail("Bag target rounded to 0.5 mm",fmt(bag)+" mm");}
+else addDetail("Capsular bag","10.0 mm (typical adult only)");
+el("limitation").textContent=isExploratory?"Device-specific correction is based on group means and may have clinically important error in an individual eye. No validated IOLMaster 700-based ArtificialIris sizing equation exists.":"Hashemian’s agreement limits with UBM are about ±0.55 mm even after adjustment. The two WTW estimates share the same measurement and are not independent checks. Vass/Crawford does not constitute a validated combined sizing model.";
+lastResult={source:source,wtw:w,cross:cross,sts:sts,al:al,k:k,passive:passive,sutured:sutured,bag:bag,bagExpected:bagExpected,adjustedWtw:adjustedWtw,stsEst:stsHashemian,exploratory:isExploratory};
+}
+function switchTo(next){
+if(next===source)return;remembered[source]=el("wtw").value;source=next;el("wtw").value=remembered[next];
+el("source-caliper").setAttribute("aria-pressed",String(next==="caliper"));el("source-iol").setAttribute("aria-pressed",String(next==="iol"));
+el("caliper-cross").classList.toggle("hidden",next!=="iol");
+el("wtw-context").textContent=next==="iol"?"An IOLMaster 700 WTW cannot be substituted directly into caliper-based rules. A group-mean offset will be shown only as an exploratory proxy.":"The manufacturer’s +0.5 mm rule was formulated for horizontal WTW caliper measurements.";
+calc();
+}
+el("source-caliper").addEventListener("click",function(){switchTo("caliper");});
+el("source-iol").addEventListener("click",function(){switchTo("iol");});
+nums.forEach(function(id){el(id).addEventListener("input",calc);});
+el("reset").addEventListener("click",function(){remembered={caliper:"11.7",iol:"12.3"};["caliper-optional","sts","al","k"].forEach(function(id){el(id).value="";});el("wtw").value=source==="caliper"?"11.7":"12.3";calc();});
+el("print").addEventListener("click",function(){window.print();});
+el("copy").addEventListener("click",function(){
+if(!lastResult)return;var r=lastResult;
+var txt="ArtificialIris trephine planning | v1.0\nWTW source: "+(r.source==="caliper"?"manual caliper":"IOLMaster 700")+"\nWTW: "+fmt(r.wtw,2)+" mm";
+if(r.cross!==null)txt+="\nManual caliper cross-check: "+fmt(r.cross,2)+" mm";
+if(r.sts!==null)txt+="\nSmallest measured STS: "+fmt(r.sts,2)+" mm";
+if(r.al!==null)txt+="\nAL: "+fmt(r.al,2)+" mm";
+if(r.k!==null)txt+="\nMean K: "+fmt(r.k,2)+" D";
+txt+="\nPassive sulcus estimate: "+fmt(r.passive)+" mm\nSutured sulcus estimate: "+fmt(r.sutured)+" mm\nCapsular bag planning size: "+fmt(r.bag)+" mm";
+if(r.bagExpected!==null)txt+=" (Vass bag "+fmt(r.bagExpected,2)+" mm minus 0.5 mm; nearest 0.5 mm)";
+if(r.exploratory)txt+="\nCAUTION: IOLMaster-only group offset −0.69 mm is not validated for individuals.";
+txt+="\nFor planning only; not a validated surgical device. Confirm intraoperative fit. Sources: HumanOptics 2026 IFU; HumanOptics sizing guide; Hashemian 2018; Ang 2022; Vass 1999; Crawford 2022.\n";
+var btn=el("copy"),original=btn.textContent;
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){btn.textContent="Copied ✓";setTimeout(function(){btn.textContent=original;},1800);}).catch(function(){window.prompt("Copy summary:",txt);});}else window.prompt("Copy summary:",txt);
+});
+calc();
+})();
+</script>
+</body>
+</html>
